@@ -1,0 +1,1675 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>TypeScript</title>
+
+    <link rel="stylesheet" href="reveal/css/reset.css">
+    <link rel="stylesheet" href="reveal/css/reveal.css">
+    <link rel="stylesheet" href="reveal/css/kontur.css">
+
+    <!-- Theme used for syntax highlighting of code -->
+    <link rel="stylesheet" href="reveal/css/idea-for-light.css">
+
+    <!-- Printing and PDF exports -->
+    <script>
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = window.location.search.match( /print-pdf/gi ) ? 'reveal/css/print/pdf.css' : 'reveal/css/print/paper.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+    </script>
+</head>
+<body class="has-light-background">
+<div class="reveal"><div class="slides">
+<section data-markdown><script type="text/template">
+
+# TypeScript
+
+</script></section>
+<section>
+    <section data-markdown><script type="text/template">
+      ## Введение
+    </script></section>
+    <section data-markdown><script type="text/template">
+        ### Проблема JS
+        
+        ```js
+        const str = '2468';
+        const res = str.split('').reduce(sum);
+        
+        function sum (a, b) {
+            return a + b;
+        }
+        
+        console.log(res);
+        ```
+    </script></section>
+    <section data-markdown data-transition="slide none"><script type="text/template">
+        ### Еще проблема
+        
+        ```js
+        const a = 2;
+        const b = [];
+        const c = a + b;    // ?
+        ```
+    </script></section>
+    <section data-transition="none slide" data-markdown><script type="text/template">
+        ### Еще проблема
+
+        ```js
+        const a = 2;
+        const b = [];
+        const c = a + b;    // "2"
+        ```
+    </script></section>
+    <section data-markdown><script type="text/template">
+        ### И еще проблема
+        
+        ```js
+        function getUserName(id, source) {
+            /* Тут какой-то код */
+        }
+
+        function formatDate(date, formatType) {
+            /* Тут какой-то код */
+        }
+        ```
+
+        Что принимают эти функции вторым аргументом?
+    </script></section>
+
+    <section data-markdown><script type="text/template">
+        ### Почему существуют такие проблемы?
+        ### Как можно от них избавиться?
+    </script></section>
+
+
+    <section data-markdown><script type="text/template">
+        ### История решений
+        
+        #### 1. JSDoc
+        
+        ```js
+        /**
+        * Функция для форматирования даты в тот вид, который надо показывать на странице
+        * @param {Date} date — дата, которую надо отформатировать
+        * @param {string} formatType — формат: строка вида "DD.MM.YYYY"
+        */
+        function formatDate(date, formatType) {
+        /* Тут какой-то код */
+        }
+        ```
+        ![hint in vscode](img/jsdoc-hint.png)
+        
+    </script></section>
+    <section data-markdown><script type="text/template">
+        ### История решений
+
+        #### 2. Dart
+
+        Язык программирования от Google:
+        - статическая типизация
+        - работает в браузере
+        - компилируется в JS
+        
+        
+        ```js
+        string function formatDate(Date date, string formatType) {
+            /* Тут какой-то код */
+        }
+        ```
+
+    </script></section>
+    <section data-markdown><script type="text/template">
+        ### История решений
+
+        #### 3. React.propTypes
+        
+        ```js
+        class MyComponent extends React.Component {}
+        
+        MyComponent.propTypes = {
+            name: PropTypes.string,
+            onClick: PropTypes.func,
+        }
+        
+        ```
+    </script></section>
+    <section data-markdown><script type="text/template">
+        ### История решений
+
+        #### 4. Flow
+
+        ```js
+        // @flow
+        function formatDate(date: Date, formatType: string): string {
+            /* Тут какой-то код */
+        }
+
+        formatDate(new Date(), {day: 'full'}); // Error!
+        ```
+    </script></section>
+    <section data-markdown><script type="text/template">
+        ### История решений
+
+        #### 5. TypeScript
+
+        - статически типизирован
+        - компилируется в JS
+        - является стандартом де-факто для крупных приложений
+    </script></section>
+    <section data-markdown><script type="text/template">
+        ### TypeScript
+
+        Был создан, чтобы добавить типизацию к JS.
+        Поэтому у TS очень гибкая и удобная система типов.
+    </script></section>
+</section>
+<section>
+    <section data-markdown><script type="text/template">
+        ## Инфраструктура для TS
+    </script></section>
+    <section data-markdown><script type="text/template">
+        ### Официальный сайт
+
+        Всю необходимую информацию о TypeScript можно найти на [официальном сайте](https://www.typescriptlang.org/).
+
+        Здесь есть: документация, гайды по настройке, ссылки для скачивания и т.д.
+    </script></section>
+    <section data-markdown><script type="text/template">
+        ### Песочница
+        
+        Для проверки идей стоит использовать официальную песочницу [TypeScript Playground](https://www.typescriptlang.org/play/)
+        
+        Именно в ней будут находиться почти все задания нашего занятия.  
+    </script></section>
+
+    <section data-markdown><script type="text/template">
+        ### Реальные проекты
+
+        В реальных проектах используется [tsconfig.json](https://www.typescriptlang.org/docs/handbook/tsconfig-json.html)
+
+        В этом файле хранится конфигурация для компилятора TypeScript. Например, в нем можно сконфигурировать:
+        - в какую версию ES компилировать TypeScript (ES5, ES6, ...)
+        - нужно ли генерировать SourceMap-ы
+        - какие файлы (по каким путям) нужно компилировать
+        - ...
+
+        Для более подробной информации о возможностях конфигурации TypeScript можно узнать на официальном сайте.
+    </script></section>
+    <section data-markdown><script type="text/template">
+        ### Генерация tsconfig.json
+
+        tsconfig.json можно создать и заполнить вручную. А можно выполнить команду
+        ```
+        tsc --init
+        ```
+        и компилятор сгенерирует файл конфигурации с дефолтными настройками.
+    </script></section>
+    <section data-markdown><script type="text/template">
+        ### Чем компилировать TS
+
+        - `tsc — TypeScript Compiler`  
+        Подходит для приложений без фреймворков, которые просто нужно скомпилировать TS -> JS
+        - `webpack-loader`  
+        Подходит для приложений с реактом или другими фреймворками
+        - `@babel/preset-typescript`  
+        Подходит в тех случаях, когда в сборке TS -> готовый бандл много шагов, чтобы не было проблем на стыке шагов. 
+    </script></section>
+</section>
+<section>
+    <section data-markdown><script type="text/template">
+        ## Простые типы
+    </script></section>
+    <section data-markdown><script type="text/template">
+        ### Синтаксис
+        
+        Пример объявления переменной в TypeScript:
+        
+        ```ts
+        const a: number = 10;
+        ```
+        Тип описывается после символа `:`.  
+        Примитивные типы пишутся с маленькой буквы.
+    </script></section>
+
+    <section data-markdown><script type="text/template">
+        ### Примитивы
+
+        ```ts
+        const a: number = 10;
+        const b: string = 'abc';
+        const c: boolean = a < 30;
+        ```
+        
+    </script></section>
+    <section data-markdown><script type="text/template">
+        ### Пробуем обмануть систему
+
+        ```ts
+        const a: number = 'abc';
+        ```
+        <img src="img/wrongtype.png" class="fragment">
+    </script></section>
+    <section data-markdown><script type="text/template">
+        ### Массивы
+
+        ```ts
+        const stringArr: string[] = ['abc', 's'];
+        const numberArr: number[] = [1, 3 + 5];
+        const booleanArr: boolean[] = [true, 0 > 15, 'abc' === 'abc'];
+        ```
+    </script></section>
+    <section data-markdown><script type="text/template">
+        ### Массивы, альтернативный синтаксис
+
+        Иногда вы можете встретить другой синтаксис описания массивов:
+        ```ts
+        const stringArr: Array<string> = ['abc', 's'];
+        ```
+        
+        Про этот синтаксис поговорим дальше, а пока будем пользоваться синтаксисом `string[]`.
+    </script></section>
+    <section data-markdown data-transition="slide none"><script type="text/template">
+        ### Массивы, что можно сложить внутрь
+        
+        Валидны ли эти конструкции?
+        ```ts
+        const a: number[] = [1, 2, 3, "4"]; // ?
+        const b: number[] = [];     // ?
+        ```
+        
+    </script></section>
+    <section data-markdown data-transition="none slide"><script type="text/template">
+        ### Массивы, что можно сложить внутрь
+        
+        Валидны ли эти конструкции?
+        ```ts
+        const a: number[] = [1, 2, 3, "4"]; // Error: Type 'string' is not assignable to type 'number'.(2322)
+        const b: number[] = [];     // Все нормально
+        ```
+        
+    </script></section>
+
+    <section data-markdown><script type="text/template">
+        ### Что делать, если надо сложить значения разного типа?
+        
+        ```ts
+        const user: ? = ['Всеволод', 19, 'Екатеринбург', true];
+        ```
+    </script></section>
+
+    <section data-markdown><script type="text/template">
+        ### Tuple (кортеж)
+
+        ```ts
+        const user: 
+            [string, number, string, boolean] 
+            = ['Всеволод', 19, 'Екатеринбург', true];
+        ```
+    </script></section>
+    <section data-markdown data-transition="none"><script type="text/template">
+        ### Что делать, если надо описать массив внутри кортежа?
+
+        ```ts
+        const a: ? = [['Иван', 'Петров'], 'user', [14, 21]];
+        ```
+    </script></section>
+    <section data-markdown data-transition="none"><script type="text/template">
+        ### Что делать, если надо описать массив внутри кортежа
+
+        ```ts
+        const a:
+            [[string, string], string, number[]]
+            = [['Иван', 'Петров'], 'user', [14, 21]];
+        ```
+    </script></section>
+    <section data-markdown data-transition="none"><script type="text/template">
+        ### Что можно сложить в tuple?
+
+        Валидны ли эти конструкции?
+        ```ts
+        const a: [number] = [];     // ?
+        const b: [number] = ["123"];// ?
+        const c: [number] = [1, 2]; // ?
+        ```
+    </script></section>
+    <section data-markdown data-transition="none"><script type="text/template">
+        ### Что можно сложить в tuple
+
+        ```ts
+        const a: [number] = [];     // Error: Property '0' is missing in type '[]' but required in type '[number]'.(2741)
+        const b: [number] = ["123"];// Error: Type 'string' is not assignable to type 'number'.(2322)
+        const c: [number] = [1, 2]; /* Error:
+            Type '[number, number]' is not assignable to type '[number]'.
+            Types of property 'length' are incompatible.
+            Type '2' is not assignable to type '1'.(2322)
+        */
+        ```
+    </script></section>
+    <section data-markdown><script type="text/template">
+        ### null и undefined
+
+        В JS null и undefined — примитивные типы, содержащие по одному значению в каждом типе. Такие же типы есть и в TS:
+        ```ts
+        const a: null = null; // Вряд ли вам это понадобится
+        const b: undefined = undefined; // И это тоже
+        ```
+    </script></section>
+    <section data-markdown><script type="text/template">
+        ### null и undefined
+        
+        Без дополнительных настроек, null и undefined могут быть значением переменной любого типа:
+        
+        ```ts
+        const a: string = null;
+        const b: number = undefined;
+        const d: string[] = null;
+        const e: [number] = undefined;
+        const f: [string, string] = [null, null];
+        ```
+        Но обычно TS настраивают, чтобы nullable типы нужно было описывать явно.
+    </script></section>
+    <section data-markdown><script type="text/template">
+        ### Автоматический вывод типов
+        
+        ```ts
+        let a = 10;   // a: number
+        let b = a;    // b: number
+        let c = a + b;// c: number
+        let d = c - 2*a === 0;// d: boolean
+        ```
+    </script></section>
+    <section data-markdown><script type="text/template">
+        ### Автоматический вывод типов у массивов
+
+        ```ts
+        const a = [1, 2, 3];// a: number[]
+        const b = [0, 1];   // b: number[]
+        ```
+        
+        Если нужен tuple — придется писать явно. 
+    </script></section>
+    <section data-markdown><script type="text/template">
+        ### Следствие автоматического вывода
+
+        ```ts
+        // Так не сработает:
+        let a: [number, number];
+        const b = [1, 2];
+        a = b; // Error: Type 'number[]' is missing the following properties from type '[number, number]': 0, 1(2739)
+
+        // А наоборот сработает
+        let c: [number, number] = [1, 2];
+        let d = [2]; // d: number[]
+        d = c;
+        ```
+    </script></section>
+    <section data-markdown><script type="text/template">
+        ### Пора писать код!
+        
+        [Задача](https://www.typescriptlang.org/play/?strictNullChecks=false#code/PQKgsAUABDWOgggGEECwgDCcIFQQiCA4QQ-CBcOwgCgYiBaByIFFlPoLwgCg4iCCsINVoPIgUSg3CBsCGANFACN+AYwpQAJvwwJAXCD86GQHwggRhBA0iCRYUagyhqOiqIsASIFmWKZUGYsA8IHi4ksAOkghgkSMID2AOwDOAFyhuKABeKAAzbgAbXwBTAG4PHwDBUIjouMSILz9A0TDImISk3Ik0wsz3CBKUgEcARjTuLJy6gCY08QBtAAYAXRbkwNqAZjTajoBqKAaoafFHKNjvAHN-AAtB0tqAFjSBReW19bnBLra+w9WNrbqAVn3QkLDhLvq+3oGa4YA2NNf3p8ni83h9+p9bsMAOzjP7PMK1B7wqAAj7vSEzAAcAC4oN4AK5RKL-CFAA)
+    </script></section>
+</section>
+<section>
+    <section data-markdown><script type="text/template">
+        ## Типы — это множества
+    </script></section>
+    <section data-markdown><script type="text/template">
+        ### Типы — множества
+        
+        Все типы в TS — это множества.
+        
+        Например, тип `number` — множество всех чисел:  
+        - всех поддерживаемых систем счисления,   
+        - целых и десятичных,  
+        - включая `Infinity`, `NaN`, `-0`   
+    </script></section>
+    <section data-markdown><script type="text/template">
+        ### Как думаете
+
+        Существуют ли типы, являющиеся единичными множествами?
+    </script></section>
+    <section data-markdown><script type="text/template">
+        ### Единичные множества
+        
+        ```ts
+        const a: 10 = 10;
+        const b: true = true;
+        const c: "lalaka" = "lalaka";
+        const d: null = null;
+        ```
+    </script></section>
+    <section data-markdown><script type="text/template">
+        ### Автовывод типов
+
+        Зависит от способа объявления переменной:
+        ```ts
+        const a = 10;   // a: 10
+        let aa = 10;    // aa: number
+        const b = "str";// b: "str"
+        let bb = "str"; // bb: string
+        ```
+    </script></section>
+    <section data-markdown data-transition="none"><script type="text/template">
+        ### Как думаете
+
+        Какие типы у этих переменных?
+        ```ts
+        const a = [1,2,3];   // ?
+        let b = [1,2,3];     // ?
+        ```
+    </script></section>
+    <section data-markdown data-transition="none"><script type="text/template">
+        ### Как думаете
+
+        Какие типы у этих переменных?
+        ```ts
+        const a = [1,2,3];   // a: number[]
+        let b = [1,2,3];     // b: number[]
+        ```
+    </script></section>
+    <style>
+        .img-wrapper {
+            position: absolute;
+            left: 0;
+            width: 694px;
+            height: 450px;
+            background: white;
+            padding-top: 45px;
+            top: 0;
+        }
+    </style>
+    <section data-markdown><script type="text/template">
+        ### Как это работает
+        ```ts
+        const a: = 10;
+        const b: number = a;
+        ```
+        <div style="position: relative;">
+            <img src="img/10isNumber-1.png" height="450" alt="10 is number?">
+            <img src="img/10isNumber-2.png" height="450" alt="10 is number? yes" class="fragment" style="position: absolute; left: 0">
+            <div class="fragment img-wrapper">
+                <img src="img/10isNumber-3.png" height="405" alt="10 is number? yes">
+            </div>
+        </div>
+        
+    </script></section>
+    <section data-markdown><script type="text/template">
+        ### Как это работает
+        
+        ```ts
+        const a: = "str";
+        const b: number = a;
+        ```
+        
+        <div style="position: relative;">
+            <img src="img/strIsNumber-1.png" height="450" alt="str is number?">
+            <img src="img/strIsNumber-2.png" height="450" alt="str is number? yes" class="fragment" style="position: absolute; left: 0">
+            <img src="img/strIsNumber-3.png" height="450" alt="str is number? yes" class="fragment" style="position: absolute; left: 0">
+        </div>
+        
+    </script></section>
+    <section data-markdown data-transition="none"><script type="text/template">
+        ### Кортеж и массив
+        
+        Валиден ли следующий код?
+        ```ts
+        const a: [number, number, number] = [1, 2, 3];
+        const b: number[] = a; // ?
+        ```
+        А этот?
+        ```ts
+        const b: number[] = [1, 2, 3];
+        const a: [number, number, number] = b; // ?
+        ```
+    </script></section>
+    <section data-markdown data-transition="none"><script type="text/template">
+        ### Кортеж и массив
+        
+        Валиден ли следующий код?
+        ```ts
+        const a: [number, number, number] = [1, 2, 3];
+        const b: number[] = a; // Все нормально
+        ```
+        А этот?
+        ```ts
+        const b: number[] = [1, 2, 3];
+        const a: [number, number, number] = b; // Error: Type 'number[]' is missing the following properties from type '[number, number, number]': 0, 1, 2(2739)
+        ```
+    </script></section>
+    <section data-markdown><script type="text/template">
+        ### Кортеж и массив
+
+        <img src="img/tupleAndNumberArray.png" alt="tuple and numbers array">
+    </script></section>
+
+    <section data-markdown><script type="text/template">
+        ## Any
+    </script></section>
+    <section data-markdown><script type="text/template">
+        ### Any
+        
+        ```ts
+        let a: any = null;
+        a = 10;
+        a = true;
+        a = "lalaka";
+        a = [1, 2, 3];
+        ```
+        
+    </script></section>
+    <section data-markdown><script type="text/template">
+        ### Any как множество
+
+        - any является множеством абсолютно всех возможных значений. 
+        - any является подмножеством абсолютно любого типа.
+        <img src="img/any.png" alt="any">
+        
+    </script></section>
+    <section data-markdown><script type="text/template">
+        ### Any как подмножество любого типа
+
+        ```ts
+        const a: any = "lalaka";
+        const b: number = a + a;
+        const c: true = a;
+        const d: [number, [string, string]] = a;
+        ```
+    </script></section>
+    <section data-markdown><script type="text/template">
+        ### Как думаете
+        
+        Когда стоит использовать `any`?
+    </script></section>
+    <section data-markdown><script type="text/template">
+        ### Когда использовать
+
+        Для any TS отключает все проверки типов. Просто работает в режиме JS.
+        
+        Использовать any стоит:
+        - если проект только начали внедрять TS и еще не все успели переписать, легаси пусть будет с any
+        - чтобы парсить незнакомый JSON
+        - если вынуждены использовать нетипизированый JS в части приложения
+    </script></section>
+    <section data-markdown><script type="text/template">
+        ## Объединение типов
+    </script></section>
+    <section data-markdown><script type="text/template">
+        ### Font-weight
+        
+        Попробуем описать переменную, которая будет хранить значение css-свойства font-weight:
+        
+        ```ts
+        let fontWeight: ? = "bold";
+        fontWeight = 600;
+        ```
+    </script></section>
+    <section data-markdown><script type="text/template">
+        ### Font-weight
+        
+        Можно написать `any`:
+        
+        ```ts
+        let fontWeight: any = "bold";
+        fontWeight = 600;
+        fontWeight = true;
+        fontWeight = [1, "lalaka"];
+        ```
+    </script></section>
+    <section data-markdown><script type="text/template">
+        ### Font-weight
+        
+        Нужен какой-то тип, который разрешит записывать только строки или числа. 
+        Это называется объединение типов:
+        ```ts
+        let fontWeight: number | string = "bold"; 
+        ```
+        <img src="img/numberAndString.png" alt="number and string">
+    </script></section>
+    <section data-markdown><script type="text/template">
+        ### Font-weight
+        
+        Усложним задачу. Теперь мы хотим, чтобы еще null и undefined можно было записать.
+        
+        ```ts
+        let fontWeight: ? = "bold";
+        fontWeight = 600;
+        fontWeight = null;
+        fontWeight = undefined;
+        ```
+        <img src="img/numberAndStringAndNull.png" alt="number and string and null and undefined">
+    </script></section>
+    <section data-markdown><script type="text/template">
+        ### Font-weight
+        
+        ```ts
+        let fontWeight: number | string | null | undefined = "bold";
+        fontWeight = 600;
+        fontWeight = null;
+        fontWeight = undefined;
+        ```
+        <img src="img/numberAndStringAndNull.png" alt="number and string and null and undefined">
+    </script></section>
+    <section data-markdown><script type="text/template">
+        ### Font-weight
+        
+        ```ts
+        let fontWeight: number | string | null | undefined = "lalaka";
+        fontWeight = -300;
+        ```
+        Хочется ограничить значения только теми, которые поймет css: "bold", "bolder", 500, 600.
+        Это не все значения, но мы для примера возьмем только их.
+    </script></section>
+    <section data-markdown><script type="text/template">
+        ### Font-weight
+        
+        ```ts
+        let fontWeight: "bold" | "bolder" | 500 | 600 | null | undefined = "bold";
+        fontWeight = 600;
+        fontWeight = null;
+        fontWeight = undefined;
+        fontWeight = 500;
+        fontWeight = "bolder";
+        fontWeight = "lalaka"; // Error: Type '"lalaka"' is not assignable to type '"bold" | "bolder" | 500 | 600 | null | undefined'.(2322)
+        ```
+    </script></section>
+    <section data-markdown><script type="text/template">
+        ### Объединение массивов
+        
+        ```ts
+        const a: number[] | string[] = [1, 2, 3];
+        const b: number[] | string[] = ["lalaka"];
+        ```
+    </script></section>
+    <section data-markdown data-transition="none"><script type="text/template">
+        ### Как думаете
+
+        валиден ли следующий код?
+        ```ts
+        const a: number[] | string[] = [1, "str", 3]; // ?
+        const b: number[] | string[] = []; // ?
+        const c: number[] | string[] = [true]; // ?
+        ```
+    </script></section>
+    <section data-markdown data-transition="none"><script type="text/template">
+        ### Как думаете
+
+        валиден ли следующий код?
+        ```ts
+        const a: number[] | string[] = [1, "str", 3]; // Error: Type '(string | number)[]' is not assignable to type 'number[] | string[]'.
+        const b: number[] | string[] = []; // Все ОК
+        const c: number[] | string[] = [true]; // Error: Type 'true' is not assignable to type 'string | number'.(2322)
+        ```
+    </script></section>
+    <section data-markdown><script type="text/template">
+        ### Объединение элементов массивов
+
+        ```ts
+        const a: (number | string)[] = [1, "lalaka", 3];
+        ```
+    </script></section>
+    <section data-markdown><script type="text/template">
+        ## Пересечение типов
+    </script></section>
+    <section data-markdown><script type="text/template">
+        ### Пересечение типов
+
+        ```ts
+        const a: number & string = ???; 
+        ```
+        
+    </script></section>
+    <section data-markdown><script type="text/template">
+        ### Пересечение типов
+
+        <img src="img/numberAndString.png" alt="number and string">
+
+        Пересечение множества `string` и `number` = `∅`. Пустое множество соответствует типу `never` в TS.
+        ```ts
+        const a: number & string = ???; // Такого значения не существует 
+        ```
+    </script></section>
+    <section data-markdown data-transition="none"><script type="text/template">
+        ### Пересечение типов
+
+        Для примитивов и кортежей пересечение бессмысленно — оно порождает пустое множество.   
+        Для массивов однако это множество будет не пустым. 
+        Как думаете, что будет валидным значением для переменных `a` и `b`?
+        
+        ```ts
+        const a: (number & string & boolean)[] = ?;
+        const b: number[] & string[] & boolean[] = ?;
+        ```
+    </script></section>
+    <section data-markdown data-transition="none"><script type="text/template">
+        ### Пересечение типов
+
+        Для примитивов и кортежей пересечение бессмысленно — оно порождает пустое множество.   
+        Для массивов однако это множество будет не пустым. 
+        Как думаете, что будет валидным значением для переменных `a` и `b`?
+        
+        ```ts
+        const a: (number & string & boolean)[] = []; // Пустой массив подходит
+        const b: number[] & string[] & boolean[] = []; 
+        ```
+    </script></section>
+    <section data-markdown ><script type="text/template">
+        ### Пересечение типов
+
+        Настоящую силу пересечения типов мы обсудим дальше, в более сложных типах данных.
+    </script></section>
+    <section data-markdown ><script type="text/template">
+        ### Тест. Типы как множества
+
+        [Ссылка на тест](https://docs.google.com/forms/d/e/1FAIpQLSdoEt54rr4l0UZaxu9GnlUVC-KOwNt7yYgyGAxCok3X2FX80A/viewform?usp=sf_link)
+    </script></section>
+</section>
+<section>
+    <section data-markdown><script type="text/template">
+        ## Объекты
+    </script></section>
+    <section data-markdown><script type="text/template">
+        ### Тип объекта
+        
+        ```ts
+        const a = { a: 10 }; // { a: number }
+        ```
+    </script></section>
+    <section data-markdown><script type="text/template">
+        ### Тип объекта
+        
+        Почему вывелся тип не `{ a: 10 }`, а `{ a: number }`?
+
+        ```ts
+        const a = { a: 10 }; // { a: number }
+        ```
+    </script></section>
+    <section data-markdown data-transition="none"><script type="text/template">
+        ### Что можно сложить в объект
+        
+        Валидны ли эти строки?
+        ```ts
+        const a: { a: number } = { b: 10 }; // ?
+        const b: { a: number } = { };       // ?
+        const c: { a: number } = { a: true };// ?
+        const d: { a: number } = { a: 10, b: 25 };// ?
+        ```
+    </script></section>
+    <section data-markdown data-transition="none"><script type="text/template">
+        ### Что можно сложить в объект
+        
+        Валидны ли эти строки?
+        ```ts
+        const a: { a: number } = { b: 10 }; // Error: Type '{ b: number; }' is not assignable to type '{ a: number; }'.
+        const b: { a: number } = { };       // Error: Property 'a' is missing in type '{}' but required in type '{ a: number; }'.(2741)
+        const c: { a: number } = { a: true };// Error: Type 'true' is not assignable to type 'number'.
+        const d: { a: number } = { a: 10, b: 25 };// Error: Type '{ a: number; b: number; }' is not assignable to type '{ a: number; }'.
+        ```
+    </script></section>
+    <section data-markdown data-transition="none"><script type="text/template">
+        ### Что можно сложить в объект
+
+        А если обмануть систему?
+        ```ts
+        const a = { a: 10, b: "lalaka" }; 
+        a.a = 300       // ?
+        a.a = "malaka"; // ?
+        a.z = true;     // ?
+        ```
+    </script></section>
+    <section data-markdown data-transition="none"><script type="text/template">
+        ### Что можно сложить в объект
+
+        А если обмануть систему?
+        ```ts
+        const a = { a: 10, b: "lalaka" };
+        a.a = 300       // Все ок
+        a.a = "malaka"; // Error: Type '"malaka"' is not assignable to type 'number'.
+        a.z = true;     // Error: Property 'z' does not exist on type '{ a: number; b: string; }'.
+        ```
+    </script></section>
+    <section data-markdown><script type="text/template">
+        ### Проверка типов объектов 
+
+        ```ts
+        let x: {a: number, b: string};
+        const y = {a: 10, b: "lalaka"};
+        x = y;
+        ```
+        <p class="fragment">
+            Объект <code>y</code> совместим с типом объекта <code>x</code>, если у объекта <code>y</code> есть все поля,
+            которые есть у <code>x</code> и тип этих полей совместим с типом полей <code>x</code> 
+        </p>
+    </script></section>
+    <section data-markdown data-transition="none"><script type="text/template">
+        ### Как думаете
+
+        валиден ли этот код?
+        ```ts
+        let x: {a: number, b: string};
+        const y: {a: 10, b: "lalaka"} = {a: 10, b: "lalaka"};
+        x = y; // ?
+        ```
+    </script></section>
+    <section data-markdown data-transition="none"><script type="text/template">
+        ### Как думаете
+
+        валиден ли этот код?
+        ```ts
+        let x: {a: number, b: string};
+        const y: {a: 10, b: "lalaka"} = {a: 10, b: "lalaka"};
+        x = y; // Все ок, типы полей совместимы
+        ```
+    </script></section>
+    <section data-markdown data-transition="none"><script type="text/template">
+        ### Как думаете
+
+        валиден ли этот код?
+        ```ts
+        let x: {a: number, b: string};
+        const y = {a: 10, b: "lalaka", c: true};
+        x = y;      // ?
+        x.c = false;// ?
+        ```
+    </script></section>
+    <section data-markdown data-transition="none"><script type="text/template">
+        ### Как думаете
+
+        валиден ли этот код?
+        ```ts
+        let x: {a: number, b: string};
+        const y = {a: 10, b: "lalaka", c: true};
+        x = y;      // Все ок
+        x.c = false;// Error: Property 'c' does not exist on type '{ a: number; b: string; }'.
+        ```
+    </script></section>
+    <section data-markdown ><script type="text/template">
+        ### Проверка типов объектов
+
+        работает при помощи «утиной типизации»
+    </script></section>
+    <section data-markdown><script type="text/template">
+        ## Type alias
+    </script></section>
+    <section data-markdown><script type="text/template">
+        ### Type alias
+        
+        Это возможность описать типы отдельно от объявления переменных.
+        
+        ```ts
+        type MyType = string;
+        ```
+    </script></section>
+    <section data-markdown><script type="text/template">
+        ### Type alias
+        
+        ```ts
+        type A = string
+        type B = number | boolean
+        type C = A | B
+        const c: C = 10 // type: string | number | boolean
+
+        type Q = {
+            a: A;
+            b: B;
+            c: C;
+            tuple: [A, B, "lalaka", string];
+            array: number[];
+            aliasArray: A[];
+        }
+        ```
+    </script></section>
+    <section data-markdown><script type="text/template">
+        ## typeof
+    </script></section>
+    <section data-markdown><script type="text/template">
+        ### typeof
+        
+        Может понадобиться сохранить тип какой-то переменной:
+        ```ts
+        const x = {a: "lalaka", b: 10};
+        type X = typeof x;
+
+        const y: X = {a: "malaka", b: 15} // type: {a: string, b: number}
+        const z: typeof x = {a: "palaka", b: 30} //type: {a: string, b: number}
+        ```
+    </script></section>
+    <section data-markdown data-transition="none"><script type="text/template">
+        ### Как думаете
+        
+        Какие будут типы у переменных `b` и `c`?
+        ```ts
+        const a = [1, 2, 3];
+        let b: typeof a;    // ?
+        let c = typeof a;   // ?
+        ```
+    </script></section>
+    <section data-markdown data-transition="none"><script type="text/template">
+        ### Как думаете
+        
+        Какие будут типы у переменных `b` и `c`?
+        ```ts
+        const a = [1, 2, 3];
+        let b: typeof a;    // number[]
+        let c = typeof a;   // "string" | "number" | "bigint" | "boolean" | "symbol" | "undefined" | "object" | "function"
+        ```
+    </script></section>
+    <section data-markdown><script type="text/template">
+        ### Как думаете
+        ```ts
+        const a = [1, 2, 3];
+        let b: typeof a;    // number[]
+        let c = typeof a;   // "string" | "number" | "bigint" | "boolean" | "symbol" | "undefined" | "object" | "function"
+        ```
+        Как TS не путает какой `typeof` использовать?
+        
+        <p class="fragment">
+            TS различает контекст использования.<br>
+            <code>typeof</code> в месте, где объявляются типы — взять тип у переменной.<br>  
+            <code>typeof</code> в обычном коде — используем <code>typeof</code> из JS
+        </p>
+    </script></section>
+    <section data-markdown><script type="text/template">
+        ## Interface
+    </script></section>
+    <section data-markdown><script type="text/template">
+        ### Interface
+        
+        ```ts
+        interface A {
+            a: number;
+            b: string:
+            q: boolean;
+        }
+        
+        const a: A = {
+            a: 100500,
+            b: "lalaka",
+            q: false,
+        };
+        ```
+        
+        Обычно объекты описываются интерфейсами, а не `type alias`.
+    </script></section>
+    <section data-markdown><script type="text/template">
+        ### Interface vs type alias
+        
+        **1. type alias может содержать не только объект**
+        
+        ```ts
+        interface A {
+            a: number
+        }
+
+        type B = A;
+        type C = B;
+        type D = string | 10 | ["lalaka"] | null | undefined
+        type E = C | D
+        ```
+    </script></section>
+    <section data-markdown><script type="text/template">
+        ### Interface vs type alias
+        
+        **2. При объявлении интерфейсов с одинаковым именем тип объекта расширяется...**
+        
+        ```ts
+        interface A {
+            a: number;
+        }
+
+        interface A {
+            b: string;
+        }
+
+        const a: A = { a: 10, b: "lalaka" }
+        ```
+    </script></section>
+    <section data-markdown><script type="text/template">
+        ### Interface vs type alias
+        
+        **2. ...а объявить два type alias с одинаковым именем нельзя**
+        
+        ```ts
+        type A = { //Error: Duplicate identifier 'A'.
+            a: number;
+        }
+
+        type A = { //Error: Duplicate identifier 'A'.
+            b: string;
+        }
+        ```
+    </script></section>
+    <section data-markdown><script type="text/template">
+        ### Interface vs type alias
+        
+        **3. Интерфейсы могут наследоваться друго от друга**
+        
+        ```ts
+        interface A {
+            a: number;
+        }
+
+        interface B extends A {
+            b: string;
+        }
+
+        interface C extends A {
+            c: boolean;
+        }
+
+        const a: A = { a: 10 };
+        const b: B = { a: 15, b: "lalaka" };
+        const c: C = { a: 20, c: true };
+        ```
+        
+        Type alias не наследуются.
+    </script></section>
+    <section data-markdown><script type="text/template">
+        ### Interface vs type alias
+        
+        - Интерфейсы позволяют типизировать только объекты
+        - Type alias предназнчены для хранения абсолютно любого типа
+        - Интерфейсы умеют наследоваться и расширяться
+    </script></section>
+    <section data-markdown><script type="text/template">
+        ### Пример использования наследования
+
+        ```ts
+        interface DomElement {
+            width: number;
+            height: number;
+        }
+
+        interface DivElement extends DomElement {
+            textContent: string;
+        }
+
+        interface ButtonElement extends DomElement {
+            tabIndex: number;
+        }
+        ```
+        Вынесли общее (размер) в отдельный тип.
+    </script></section>
+    <section data-markdown><script type="text/template">
+        ### Пример использования наследования
+
+        ```ts
+        const div: DivElement = {textContent: "lalaka", width: 100, height: 15};
+        const button: ButtonElement = {tabIndex: 0, width: 500, height: 300};
+
+        const tree: DomElement[] = [
+            div,
+            button,
+            div,
+            button
+        ];
+        ```
+        Собрали массив из элементов базового класса. 
+    </script></section>
+    <section data-markdown><script type="text/template">
+        ### Пример использования наследования
+
+        ```ts
+        const div: DivElement = {textContent: "lalaka", width: 100, height: 15};
+
+        const q: DomElement = div;
+        q.textContent // Error: Property 'textContent' does not exist on type 'DomElement'.
+        tree[1].textContent // Error: Property 'textContent' does not exist on type 'DomElement'.
+        ```
+        Но при использовании элемента в роли его базового типа, все дополнительные поля теряются. 
+    </script></section>
+    <section data-markdown><script type="text/template">
+        ## Readonly и optional
+    </script></section>
+    <section data-markdown><script type="text/template">
+        ### Readonly
+        
+        ```ts
+        interface A {
+            readonly a: number;
+            b: string;
+        }
+        ```
+
+        Значение этоих полей указывается во время инициализации объекта. 
+        Присвоить новое значение таким полям нельзя - можно только полностью заменить весь объект.
+    </script></section>
+    <section data-markdown><script type="text/template">
+        ### Readonly
+        
+        ```ts
+        interface A {
+            readonly a: number;
+            b: string;
+        }
+        
+        let a: A;
+        a = { a: 10, b: "lalaka" }
+
+        a.b = "malaka";
+        a.a = 15 //Error: Cannot assign to 'a' because it is a read-only property.
+
+        a = {a: 15, b: "palaka"}
+        ```
+    </script></section>
+    <section data-markdown><script type="text/template">
+        ### Optional
+        
+        ```ts
+        interface A {
+            a?: number;
+            b: string;
+        }
+
+        const a1: A = { b: "lalaka" };
+        const a2: A = { a: 10, b: "malaka"}
+        ```
+    </script></section>
+    <section data-markdown><script type="text/template">
+        ### Индексаторы
+        
+        ```ts
+        interface A {
+            [index: number]: boolean;
+        }
+
+        const a: A = {
+            [1]: true,
+            [-1]: false
+        }
+        ```
+        
+        У интерфейса A нет конкретных названий полей, известно только, что они числа.
+        
+        Индексаторы могут быть только типа `string` или `number`.
+    </script></section>
+    <section data-markdown data-transition="none"><script type="text/template">
+        ### Как думаете
+        
+        это валидный код?
+        ```ts
+        interface A {
+            [index: number]: boolean;
+        }
+
+        const a: A = { "32": true };// ?
+        const b: A = { .1: true };  // ?
+        ```
+    </script></section>
+    <section data-markdown data-transition="none"><script type="text/template">
+        ### Как думаете
+        
+        это валидный код?
+        ```ts
+        interface A {
+            [index: number]: boolean;
+        }
+
+        const a: A = { "32": true };// Все ок
+        const b: A = { .1: true };  // Все ок
+        ```
+    </script></section>
+    <section data-markdown data-transition="none"><script type="text/template">
+        ### Как думаете
+        
+        а это валидный код?
+        ```ts
+        interface A {
+            [index: string]: boolean;
+        }
+
+        const a: A = { 32: true };  // ?
+        const b: A = { true: true };// ?
+        ```
+    </script></section>
+    <section data-markdown data-transition="none"><script type="text/template">
+        ### Как думаете
+        
+        а это валидный код?
+        ```ts
+        interface A {
+            [index: string]: boolean;
+        }
+
+        const a: A = { 32: true };  // Все ок
+        const b: A = { true: true };// все ок
+        ```
+    </script></section>
+    <section data-markdown><script type="text/template">
+        ### Оба типа индексатора в одном объекте
+        
+        ```ts
+        interface A {
+            [index: string]: number | string;
+            [index: number]: string;
+        }
+        
+        const a: A = {
+            "lalaka": "malaka",
+            "str": 42,
+            "42": "str",
+            35: "malaka",
+        }
+        ```
+    </script></section>
+    <section data-markdown><script type="text/template">
+        ### Оба типа индексатора в одном объекте
+        
+        Значения у индексатора типа `number` должны быть совместимы со значениями индексатора `string`
+        ```ts
+        interface A {
+            [index: string]: boolean;
+            [index: number]: boolean;
+        }
+
+        interface B {
+            [index: string]: string;
+            [index: number]: boolean; //Error: Numeric index type 'boolean' is not assignable to string index type 'string'.
+        }
+        ```
+    </script></section>
+    <section data-markdown><script type="text/template">
+        ## Пересечение объектов
+    </script></section>
+    <section data-markdown><script type="text/template">
+        ### Пересечение объектов
+        
+        ```ts
+        interface A { a: number; }
+
+        interface B { b: string; }
+
+        const q = {a: 10, b: "lalaka"};
+        const a: A = q;
+        const b: B = q;
+        ```
+        Объект q принадлежит и множеству A, и множеству B
+    </script></section>
+    <section data-markdown><script type="text/template">
+        ### Пересечение объектов
+        ```ts
+        interface A { a: number; }
+
+        interface B { b: string; }
+
+        type Q = A & B;
+        ```
+        <img src="img/A&B.png" alt="A&B">
+    </script></section>
+    <section data-markdown><script type="text/template">
+        ### Пересечение объектов
+        ```ts
+        interface A { a: number; }
+
+        interface B { b: string; }
+
+        type Q = A & B;
+        ```
+        В пересечении будут те объекты, которые содержат:
+        - поле  `a` типа `number`;
+        - поле `b` типа `string`;
+        - могут содержать любые другие поля
+    </script></section>
+    <section data-markdown><script type="text/template">
+        ### Тип значения по ключу в объекте
+        
+        Можно делать так
+        ```ts
+        interface A {
+            a: number;
+            b: string;
+            c: boolean;
+        }
+
+        type Aa = A["a"] // number
+        type Ab = A["b"] // string
+        type Ac = A["c"] // boolean
+        type Wrong = A["e"] // Error: Property 'e' does not exist on type 'A'.
+        ```
+    </script></section>
+    <section data-markdown><script type="text/template">
+        ### Тип значения по ключу в объекте
+        
+        Можно брать пересечения
+        ```ts
+        interface A {
+            a: number;
+            b: string;
+            c: boolean;
+        }
+
+        type Aab = A["a" | "b"] // number | string
+        type Aac = A["a" | "c"] // number | boolean
+        type Aabc = A["a" | "b" | "c"] // number | string | boolean
+        ```
+    </script></section>
+    <section data-markdown><script type="text/template">
+        ### Где это используется
+        
+        ```ts
+        const style: HTMLElement["style"] = {...}
+        ```
+        
+        Типизировали переменную: теперь в нее можно положить только подходящие значения для атрибута `style` в HTML. 
+    </script></section>
+    <section data-markdown><script type="text/template">
+        ### keyof
+        
+        Можно получить объединение названий ключей:
+        
+        ```ts
+        interface A {
+            a: number;
+            b: string;
+            c: boolean;
+        }
+        
+        type Keys = keyof A // "a" | "b" | "c"
+        ```
+        
+        Ну, почти как `Object.keys(A)` только с типами
+    </script></section>
+    <section data-markdown><script type="text/template">
+        ### keyof
+        
+        Можно получить объединение типов значений:
+        
+        ```ts
+        interface A {
+            a: number;
+            b: string;
+            c: boolean;
+        }
+        
+        type Q = A[keyof A] // number | string | boolean
+        ```
+        
+        А это как `Object.values(A)` только с типами
+    </script></section>
+    <section data-markdown ><script type="text/template">
+        ### Тест. Объекты
+
+        [Ссылка на тест](https://docs.google.com/forms/d/e/1FAIpQLSc8imy1IR8rPN5z4pMdmlYNJnKks0NMdNnh3OnjFMqvVkf0Jw/viewform?usp=sf_link)
+    </script></section>
+</section>
+<section>
+    <section data-markdown><script type="text/template">
+        ## Функции
+    </script></section>
+    <section data-markdown><script type="text/template">
+        ### Синтаксис функций
+        
+        ```ts
+        function foo(a: string, b: string) {
+        
+        }
+        ```
+        
+        В данном примере функция `foo` принимает два аргумента, оба из которых — строки.
+    </script></section>
+    <section data-markdown data-transition="none"><script type="text/template">
+        ### Как думаете
+        
+        Это валидный код?
+        ```ts
+        function foo(a: number) {}
+        
+        foo()       // ?
+        foo(10, 15) // ?
+        ```
+        
+    </script></section>
+    <section data-markdown data-transition="none"><script type="text/template">
+        ### Как думаете
+        
+        Это валидный код?
+        ```ts
+        function foo(a: number) {}
+        
+        foo()       // Error: Expected 1 arguments, but got 0.
+        foo(10, 15) // Error: Expected 1 arguments, but got 2.
+        ```
+    </script></section>
+    <section data-markdown><script type="text/template">
+        ### Необязательные параметры
+        
+        ```ts
+        function foo(a: number, b?: number) { // b: number | undefined
+        }
+        
+        foo(10);
+        foo(10, 15);
+        ```
+        Необязательные параметры должны быть в конце списка параметров.
+    </script></section>
+    <section data-markdown><script type="text/template">
+        ### Дефолтные значения аргументов
+        
+        ```ts
+        function foo(a: number = 10) {}
+        
+        foo(); // a = 10
+        foo(100); // a = 100
+        ```
+    </script></section>
+    <section data-markdown><script type="text/template">
+        ### Автовывод типа параметров
+        
+        ```ts
+        function foo(a = 10) {}
+        
+        foo(); // a = 10
+        foo(100); // a = 100
+        foo("lalaka") // Error: Argument of type '"lalaka"' is not assignable to parameter of type 'number'
+        ```
+    </script></section>
+    <section data-markdown><script type="text/template">
+        ### rest-параметры
+        
+        ```ts
+        function foo(...rest: number[]) {}
+        ```
+    </script></section>
+    <section data-markdown><script type="text/template">
+        ### Типизация this
+        
+        ```ts
+        function foo(this: number, b: number) {
+            const c: number = this + b;
+        }
+
+        foo(10);
+        ```
+    </script></section>
+    <section data-markdown><script type="text/template">
+        ### Типизация this
+        
+        ```ts
+        function foo(this: number) {}
+
+        foo.call(10);
+        foo.call("lalaka"); //Error: Argument of type '"lalaka"' is not assignable to parameter of type 'number'.
+
+        foo.apply(15);
+        foo.apply(true); //Error: Argument of type 'true' is not assignable to parameter
+        ```
+    </script></section>
+    <section data-markdown><script type="text/template">
+        ### Типизация возвращаемого значения
+        
+        ```ts
+        function foo(): number {}
+        
+        function bar(): number {
+            return "lalaka"; //Error: Type '"lalaka"' is not assignable to type 'number'
+        }
+        ```
+    </script></section>
+    <section data-markdown><script type="text/template">
+        ### Типизация возвращаемого значения
+        
+        ```ts
+        function foo(): void {}
+
+        function bar(): void {
+            return 10; //Error: Type '10' is not assignable to type 'void'
+        }
+        ```
+    </script></section>
+    <section data-markdown><script type="text/template">
+        ### Автовывод типа возвращаемого значения
+        
+        ```ts
+        function foo() {
+        } //: void
+
+        function bar() {
+            return 10;
+        } //: number
+        ```
+    </script></section>
+    <section data-markdown><script type="text/template">
+        ### Сохранение типа функции
+        
+        ```ts
+        type F = (a: string, b?: boolean) => void;
+        const f2: F = a => console.log(a);
+        ```
+    </script></section>
+    <section data-markdown><script type="text/template">
+        ### В инициализации можно опускать параметры
+        
+        Нормально, если в типе указано больше параметров, чем в инициализации.
+        ```ts
+        type F = (a: number) => void
+        const f: F = () => { };
+
+        f(); //Error: Expected 1 arguments, but got 0.
+        f(10);
+        ```
+        Вызвать все равно надо будет со всеми параметрами из типа.
+    </script></section>
+    <section data-markdown><script type="text/template">
+        ## Перегрузки функций
+    </script></section>
+    <section data-markdown><script type="text/template">
+        ### Разное поведение для разных типов
+        
+        Если нам нужно, чтобы для разных типов входных значений был разный результат. Можно было бы попробовать так:
+        ```ts
+function lalaka(a: "string" | "number", b: string | number): any {
+    if (a === "string") { 
+             return { a: b }
+    } else {
+             return b + 15; //Error: Operator '+' cannot be applied to types 'string | number' and 'number'.
+    }
+}
+        ```
+        
+        TS не может гарантировать, что при первом аргументе `"number"`, второй будет числом. 
+        Эти два аргумента независимы. 
+    </script></section>
+    <section data-markdown><script type="text/template">
+        ### Перегрузки функций
+        
+        ```ts
+        function foo(a: number): number;
+        function foo(a: string): string;
+        function foo(a: number | string) {
+            return a;
+        }
+        ```
+        Сначала описываем типы, потом реализацию функции.  
+        
+        ```ts
+        const a: number = foo(10) + 15;
+        const b: string = foo(10); // Error: Type 'number' is not assignable to type 'string'.
+        const c: string = foo("lalaka");
+        ```
+    </script></section>
+    <section data-markdown><script type="text/template">
+        ### Перегрузки функций
+        
+        Реализация функции должна реализовывать все перегрузки
+        ```ts
+        function foo(a: number): boolean; //Error: This overload signature is not compatible with its implementation signature.
+        function foo(a: string): boolean {
+            return true;
+        }
+
+        function bar(a: number): boolean; //Error: This overload signature is not compatible with its implementation signature.
+        function bar(a: number): string {
+            return "lalaka";
+        }
+        ```
+    </script></section>
+    <section data-markdown><script type="text/template">
+        ### Перегрузки функций
+        
+        Та функция, с которой начали обсуждать перегрузки выглядит так:
+        ```ts
+        function lalaka(a: "number", b: number): number
+        function lalaka(a: "string", b: string): {b: string};
+        function lalaka(a: "string" | "number", b: any) {
+            if (a === "string") {
+                return { a: b }
+            } else {
+                return b + 15;
+            }
+        }
+
+        lalaka("number", "lalaka") //Error: No overload matches this call.
+        lalaka("string", 150).c === "lalaka" //Error: No overload matches this call.
+        ```
+    </script></section>
+    <section data-markdown><script type="text/template">
+        ### Функция как объект
+        
+        Функции в JS — это объекты, поэтому в TS их можно описать интерфейсами, как и объекты:
+        ```ts
+        interface B {
+            (a: number, b: string): boolean // callable интерфейс
+        }
+
+        const b: B = (a, b) => a.toString() === b;
+        ```
+    </script></section>
+    <section data-markdown ><script type="text/template">
+        ### Тест. Функции
+
+        [Ссылка на тест](https://docs.google.com/forms/d/e/1FAIpQLScVFtG0snYPZ60B9nP5AEKOjSo4n_dKAOsmVCeU1q0k4WmTZA/viewform?usp=sf_link)
+    </script></section>
+</section>
+<section>
+    <section data-markdown><script type="text/template">
+        ## Практика
+    </script></section>
+    <section data-markdown><script type="text/template">
+        ### Практика
+        
+        - [Задание #1](https://www.typescriptlang.org/play/index.html#code/PQKgsAUABDWLgghhEEGwgheEEHwgVBCIIDhBD8INwdhBtABEDUCYQQBhBNAZECmxU0FYQYwERBHBOEEEEQKAYQEMANgGMArgL4AXAPYAnADRYKgLhAFgcRBMaQIwggaRAoZbQXK6ABkMGjx0mcag7A3CDYokWFG5pAEiDZNSioB4QR0povvh2gPIggGIg2I7YDraMBFAo2ICiIHpQBBRk2JzYvmicOFBomFC4zIyALCAUKCjaqbgUxH6MmKRkAHTOsIBEIHi6AMoiALYAgkISAJZSAHYKADIAptMA5hIAFmOTMwoAWgsyUptT04pKSIxQeagYvowooTSdECDAkJASAJ4ADgtQg6PjY5QAC8UAAFO1IV8+DI+EMAM4ALigfGmHwAlCCAHwotEAbne31+ixW6yOMxB4Mh7WhsIRyNRGOxuI+BIgnx+UD2B3JJ1BEKhMLhSJZmOBOMZbI5xKky15lIFNKF9NFzMVtOFDLRYol+LeEAm0wk+wAZnwhL9+MIxJJZFAAN5dGBgoRSIZDVEAE2R8IkMkNy3RyP+vLZLhdbo9029UF9-pWQagJNWG0BMzDsAj7q9Pr9AcT3MOaemGedruz0dz8cDyLmstDkAAvvrQFBALQgGhKgQqWFIgGYQKi0FAXFDIdBQF6QV3TX1QMzWyyyZFWiy2mQK8tRmNx-Naj7Mx3QWDwgDuEwkQjW4M3Xsxh5cLjM8N+ACJ4cMX4inQ+XDIFhIRBkE4wT4PcFAAIz3HUUSgABqKBwNLB8n1fAQlhTT9vx-GA-wAoDwVA1VxRRdo0NJNYkMfPhnygF8AC99ikTCj2w2BcMA4DCMZaDpSkE0YOBQTaJ3FYXygAB+EiyJTKAAEIhIABigBk5MUyjYBQ2iBFlZjWN-f8OPBSCiJxECoOZABZSQ1lI2UQMxYAoCs9ZbOWMFwPRb9mwgbzWwAWgCidXggSBW0ARBB4iKTxNDQJQgqncwbSsME3w-dEwQARgUhQMoAVk8iB51XZKX2k9YX3Sl8AEcTwWGq6oqhKFzXFKGIOCrMoUgqiqS2RWsYjrqtq+rGsKmZZwEPk50SxcZBS7Tlg65ybIAUQKybMvyprir60qdPSgAmQ7coANgK8LIo8LxYvikKIFbQBCECirwfH8W6etm+bBD4ABrPhBo9cQ-tG7berm1Khg6v0RAWbqZpaiGOqyuHmpK99IcqjKQcK+GSrKtYka60HPtK9DyvS6HYeJhH8cG-6FBfcDsY+hG2qY9KspyomcdR3a2cJhmstGlmSv5zGFJfLmUZ28GxbBSnpbB-r2vS+1G0Vkm5YAbQAXQK6m8f2lKFmF3HdoWwahY1mmjYVg3zaN5GUqyiXrcNxaOa6+WZBht2HY9sEDq5g6ABZzpAKAAr8oKgA)
+        - [Задание #2](https://www.typescriptlang.org/play/#code/PQKgsAUABDWCgggGEELwghpECkwrCCEEQQXCCD4QQbhBAZEHykHYQBQZhA9AhED0CYQAjJVQURAoAXATwAcBTKAEMANgEtBAZwB0UQPgggARBAHCBRA-CB5APCB5AkiDKki9gCIseQIwg85Aag1FKqAGUOAVwAmfAHYcpkWFECEIKYwlGgwrGzQAFT5BAGMACz4AJyhlABFRBL5ojgB7JMUyZPUMQDkQHVYsQHkQULV6GTgCKpV5BkCcZUUsNWIyQGEQQE4QYO9YFUCMIpYUEPooLARNdXR8nplAHBA8QDYQJDwoPCaMQBYQDAaaInQGSeqUL2hYIZhImPi8oowaZMOka0AREEUcBDp5AAaQoVYE9Zr0ZinXCKAgIZIzAgMBDyU75KAYahQHDg4y1O5QQBIIIjkfIQjj5HioA84okALTwtTYgjFQDiID0oKJnNjcfCmOtFG9TIApEAwODeWHezG+v3+eGaCwps0BBKQCDI9GQijGCOaxGKUB6rMFRwq1wJaQyWVyhQwryln0UPz+AOBinUoJJmtRMxoPQ+dGmyiwSO9pyNJqYfRkvlDKKIBKwfoDDFU2y5vv90vhxkO8gFQpMovFMwdMpd8o0CPdzB1SaznwQ1x8sdJ4eNwSjac53IjnaqucCBZ2RbFErLTtlAI0bvGYzBEMw6gJyjwgDEQZj4PqGjumyAgYCQbj8KAAVQkiSgAF4oABvAlcgBcUAkHASojcAHMANwEtyCABbPhn1fd8v1-CAAF9ICPXgBAAYWyRwEgva87wfZxnzcRwAIAI0SCCfA4UQOGEYCXzfD8f0gaCIFgk8AHUSNiAAlQQOAEG97xuGAEnY8iAEYoAAHygAAmESoAAZkkgAWSSAFYINo+iBCYjhYgcFx3A4FjsjItDuJ8BJ9PIgxX20jwDBomCIGPNTmJpJ49IMriCRMsjnwMDjHkSayoNs+yoHU2IABk+AANz4YRDIJMiouELyACtHDcURcksUSDAArlnDIzKoHM9x0oSfzaNAKA6SqqAD0CuD7CcVwPEQ5DUJvFqUIEAAyYLmK0prdNMqAepCtiOOG3qNPChLVIayyODQ89Lx628oGiJDOokZ9VoAbSfKBsLwxIAF1n36nSOtQyCoBUuz6qcy8byWhI6pPS1MhyJInovBIIMgUBqrkCFWnhSq6VqiB1rcV8XwEs7Gp02KeJ7LyJAEgwVWR-8gNR9HMZ8dbWr4Lb0ORnwdoE07SZ8GnYH2gT8dpmniNIsyADF0lfDGCSZqA+I458FMZ3neNM1GEas4WRfi6KvJy5w8r4fzedonxIMx26oZhjg4epKJaS+6m6cwwqde5rHALMs2pZlxLCpStKMqlwnNu2nnYB2hSqaMkWYH2oX3dplnPMKjmADMNPN33RZD7z9aeZWmfVwOoAp72U58KQs7RqQXYvCQ06l3mPKt+O-JT1XYFozXsmhhbnF197rUNn2-ZNgwG6j2BsbMzupYsgaSdbmmdvM9GqbRouPfMsSDHTsmmf2meu99nvUdniuCWT5GfINoeU9Hs35+jqAs6kHWp9p-nyKky+brvw-Z+P6Ol44We758NfTffjPYFt1HipO1-rxfigtN7I2rrZCqVU6Q1WAEAA)
+        - [Задание #3](https://www.typescriptlang.org/play/index.html#code/PQKgsAUABFgEIIrCCAYQQ3CCA4QQ7CCGEQQnCCCEQeUgIiCaC8IIFwggYiCqByIFALYCGA1gKYDKALiwA4A0UZQHwguQYAEQRIHkQKIH4QQTNHxALCCBpEEWZAkiDxAPCCYogQRBBekRJI0oqQMwgo5VEBMIIPS3x6xPFyQYe5EszVNBVDQoADsAVwAbcIA6OCQ0LDwCWz0CEnhBQEYQQFEQQUVULWUCRWQpNIJcVGllGMAMEHQM+AtERKgGYIBPKMgPKABxBjp2DgYuAC4emABaegZuKGmtRD09VFtzK0FbZSyoTMApEHgyETWACkBxEBEoQFkQS9xEIQJp00A2EHgASgn5qG5whnaWABOAAUAPYAZy+qEUhz0128WngJDu61EgjIiDsUEWy1WAQ2Wx2+0Ox0+0zBAGMQQCWF98GQNKhsPozm5SVAOKEAcEviRBAjRFA6RpGnIcopEN1oFAavjBEyiUcvjc5EZUej+EIROIpNJRKhTIs3LtFLzzOh9N41H5UDt0CRECzTNhRjA2QAiIFuyEbMjugCiXumTkQFndABlA-o0ajbKhNO6APqRvT2DK5e1SMjeXDoyUwQBYIIhniomWKUWioCcPW63jJlHc3HodfAFAijKhcIAZECbdl1iHsMUASCBQdD91ArLSGCq7XCCwQWQQa+5ynqWGNy3YZA6K+1ijs9vR92wY4Tl9XyQTjsUSWdeHzWgi69IZcToTaIUwScZSqZQQCoIF4qD6EeGIppk6aSAI2bopWbpJrW0xrhW0gtto8AuI2pSgam6a+FBbj0t+MDEVAADa1b8HBboALrzAAfGRVGUZ61EANykgBQSHuIx5RmQMZxgQVYRghZ5QA0Ci3tGmyCfwU6uLgB44SakFZgRiBESRjGepREa0ZMDHkTpUBUbRABkUAUlSNIALyWZS1JQAA1FAACM7E-vMnFAdx-YYsGFiwQGolIWQUCYBkqwKXY4gLnJRgKQe0mxpomkkUZbqUQG+mGRRJl6R5PQyuII73B+ZxRZhGrzuK3y-P8wLglANktTM3BROELDBAA5hwAAW8yuTEgAoICU1wiAuMysJwPBQIogjIM89o9LYLYkJgXYhBE0RFVYuiTktcijtImDtptZC8tIQhMgASqEwS1LKBAGEYggmKgBB6nomCYZiQgkAYaAxN5PSyLs-1nB+ZhrjYaz-YDQFpLOgiABIgqBpmF0x2g6HYohiCgoBg772nYa2CD0JyBEBwirbOsjzRY9poG8MSAGgg8DIIg+DIJ2vL8BcmSwwIRbzVoUC8vYYv9IMnAjCwkwEBkyjIOLmzKEyVxkOg2jSCUArYisx6rrKTLoqIuDVJAIDAJKHDtNwNLS0McvNa0HSSgAZvd5IcAAliC3KMNNXDcCcADedV-ICoJgvwjB8PZ1n8ByXJQAAvi6Tuy1wbyZwMztcFAAA+W2RFAYeQGnkqQKAkzTPmuSlSdegwTD8yTNbkCUsEYIcJZwwAhwACysyuxllFJhPmUmZPJkBlPWXT2688z0vEYL6vi8b26BVdwHvf9wwg-Zywecy8Mhd2RHVnUi6AAMcezC6vdH8Psz8D8UeNWC9-J5ywT33Th5TqfcX6X0PsfC+LAPLdwPiwAAHg7H2LAAAmAAVf+EI7IACYAAsMD959wQUgrgKC2AOVslAAAbIVCAJwvbBB9v7bk4QQQglDrWCunlYF92CAgjgJ9XZByGDwE4YCWBvA8iRX2HtKx8PgQIqBzVWphEiJwz4JFYEgk6h1EE3UTgAAMMGp0pPdDgLoAAkYdxFRBTsENOBiPieU0fvbRLBdH6IMeQ6yljrFQKiDfFgDjJEaOIjIysNi7FQAAIStWISwZB6DMHFxLjYwJMS4mIISaQ7xjki6pP8fHUiNj44dS6r1AakxXK0ViXZas6jnFaRgP1AEIIADuIQWAdL9ACVpAIqxsBBIMfqvtuRtNaT1GsUimnp1CTAakdjpkwCrtw1xOjySdSPicEJqye5uI8SceRii5ZRFKQAKxBKMqsNYnEkXEa7I5J8lmWRYBwNBvtBgglCBwE4rD2H8FcnfIFTi05vG2R5Wu0x27WyAA)
+    </script></section>
+</section>
+</div></div>
+
+<script src="reveal/js/reveal.js"></script>
+
+<script>
+    Reveal.initialize({
+        hash: true,
+        dependencies: [
+            { src: 'reveal/plugin/markdown/marked.js' },
+            { src: 'reveal/plugin/markdown/markdown.js' },
+            { src: 'reveal/plugin/highlight/highlight.js' },
+            { src: 'reveal/plugin/notes/notes.js', async: true }
+        ]
+    });
+</script>
+</body>
+</html>
