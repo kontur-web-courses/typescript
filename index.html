@@ -49,24 +49,6 @@
         console.log(res);
         ```
     </script></section>
-    <section data-markdown data-transition="slide none"><script type="text/template">
-        ### Еще проблема
-        
-        ```js
-        const a = 2;
-        const b = [];
-        const c = a + b;    // ?
-        ```
-    </script></section>
-    <section data-transition="none slide" data-markdown><script type="text/template">
-        ### Еще проблема
-
-        ```js
-        const a = 2;
-        const b = [];
-        const c = a + b;    // "2"
-        ```
-    </script></section>
     <section data-markdown><script type="text/template">
         ### И еще проблема
         
@@ -216,10 +198,12 @@
 
         - `tsc — TypeScript Compiler`  
         Подходит для приложений без фреймворков, которые просто нужно скомпилировать TS -> JS
-        - `webpack-loader`  
+        - `ts-loader` для webpack  
         Подходит для приложений с реактом или другими фреймворками
         - `@babel/preset-typescript`  
-        Подходит в тех случаях, когда в сборке TS -> готовый бандл много шагов, чтобы не было проблем на стыке шагов. 
+        Подходит в тех случаях, когда в сборке TS -> готовый бандл много шагов, чтобы не было проблем на стыке шагов.
+        - `альтернативные решения`  
+        Если у вас легаси или код на каких-то редких технологиях, то для них наверняка есть свои решения.
     </script></section>
 </section>
 <section>
@@ -396,21 +380,6 @@
         Если нужен tuple — придется писать явно. 
     </script></section>
     <section data-markdown><script type="text/template">
-        ### Следствие автоматического вывода
-
-        ```ts
-        // Так не сработает:
-        let a: [number, number];
-        const b = [1, 2];
-        a = b; // Error: Type 'number[]' is missing the following properties from type '[number, number]': 0, 1(2739)
-
-        // А наоборот сработает
-        let c: [number, number] = [1, 2];
-        let d = [2]; // d: number[]
-        d = c;
-        ```
-    </script></section>
-    <section data-markdown><script type="text/template">
         ### Пора писать код!
         
         [Задача](https://www.typescriptlang.org/play/?strictNullChecks=false#code/PQKgsAUABDWOgggGEECwgDCcIFQQiCA4QQ-CBcOwgCgYiBaByIFFlPoLwgCg4iCCsINVoPIgUSg3CBsCGANFACN+AYwpQAJvwwJAXCD86GQHwggRhBA0iCRYUagyhqOiqIsASIFmWKZUGYsA8IHi4ksAOkghgkSMID2AOwDOAFyhuKABeKAAzbgAbXwBTAG4PHwDBUIjouMSILz9A0TDImISk3Ik0wsz3CBKUgEcARjTuLJy6gCY08QBtAAYAXRbkwNqAZjTajoBqKAaoafFHKNjvAHN-AAtB0tqAFjSBReW19bnBLra+w9WNrbqAVn3QkLDhLvq+3oGa4YA2NNf3p8ni83h9+p9bsMAOzjP7PMK1B7wqAAj7vSEzAAcAC4oN4AK5RKL-CFAA)
@@ -488,7 +457,7 @@
     <section data-markdown><script type="text/template">
         ### Как это работает
         ```ts
-        const a: = 10;
+        const a = 10;
         const b: number = a;
         ```
         <div style="position: relative;">
@@ -504,7 +473,7 @@
         ### Как это работает
         
         ```ts
-        const a: = "str";
+        const a = "str";
         const b: number = a;
         ```
         
@@ -1048,7 +1017,7 @@
     <section data-markdown><script type="text/template">
         ### Interface vs type alias
         
-        **3. Интерфейсы могут наследоваться друго от друга**
+        **3. Интерфейсы могут наследоваться друг от друга**
         
         ```ts
         interface A {
@@ -1074,7 +1043,7 @@
         ### Interface vs type alias
         
         - Интерфейсы позволяют типизировать только объекты
-        - Type alias предназнчены для хранения абсолютно любого типа
+        - Type alias предназначены для хранения абсолютно любого типа
         - Интерфейсы умеют наследоваться и расширяться
     </script></section>
     <section data-markdown><script type="text/template">
@@ -1480,11 +1449,9 @@
         ### Типизация this
         
         ```ts
-        function foo(this: number, b: number) {
+        function sumWith(this: number, b: number) {
             const c: number = this + b;
         }
-
-        foo(10);
         ```
     </script></section>
     <section data-markdown><script type="text/template">
