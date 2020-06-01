@@ -29,7 +29,7 @@
 # TypeScript
 
 <a href="https://github.com/kontur-courses/typescript" style="display: block; text-align: center">https://github.com/kontur-courses/typescript</a>
-    
+
 </script></section>
 <section>
     <section data-markdown><script type="text/template">
@@ -37,21 +37,21 @@
     </script></section>
     <section data-markdown><script type="text/template">
         ### Проблема JS
-        
+
         ```js
         const str = '2468';
         const res = str.split('').reduce(sum);
-        
+
         function sum (a, b) {
             return a + b;
         }
-        
+
         console.log(res);
         ```
     </script></section>
     <section data-markdown><script type="text/template">
         ### И еще проблема
-        
+
         ```js
         function getUserName(id, source) {
             /* Тут какой-то код */
@@ -73,9 +73,9 @@
 
     <section data-markdown><script type="text/template">
         ### История решений
-        
+
         #### 1. JSDoc
-        
+
         ```js
         /**
         * Функция для форматирования даты в тот вид, который надо показывать на странице
@@ -87,7 +87,7 @@
         }
         ```
         ![hint in vscode](img/jsdoc-hint.png)
-        
+
     </script></section>
     <section data-markdown><script type="text/template">
         ### История решений
@@ -98,8 +98,8 @@
         - статическая типизация
         - работает в браузере
         - компилируется в JS
-        
-        
+
+
         ```js
         string function formatDate(Date date, string formatType) {
             /* Тут какой-то код */
@@ -111,15 +111,15 @@
         ### История решений
 
         #### 3. React.propTypes
-        
+
         ```js
         class MyComponent extends React.Component {}
-        
+
         MyComponent.propTypes = {
             name: PropTypes.string,
             onClick: PropTypes.func,
         }
-        
+
         ```
     </script></section>
     <section data-markdown><script type="text/template">
@@ -165,10 +165,10 @@
     </script></section>
     <section data-markdown><script type="text/template">
         ### Песочница
-        
+
         Для проверки идей стоит использовать официальную песочницу [TypeScript Playground](https://www.typescriptlang.org/play/)
-        
-        Именно в ней будут находиться почти все задания нашего занятия.  
+
+        Именно в ней будут находиться почти все задания нашего занятия.
     </script></section>
 
     <section data-markdown><script type="text/template">
@@ -196,13 +196,13 @@
     <section data-markdown><script type="text/template">
         ### Чем компилировать TS
 
-        - `tsc — TypeScript Compiler`  
+        - `tsc — TypeScript Compiler`
         Подходит для приложений без фреймворков, которые просто нужно скомпилировать TS -> JS
-        - `ts-loader` для webpack  
+        - `ts-loader` для webpack
         Подходит для приложений с реактом или другими фреймворками
-        - `@babel/preset-typescript`  
+        - `@babel/preset-typescript`
         Подходит в тех случаях, когда в сборке TS -> готовый бандл много шагов, чтобы не было проблем на стыке шагов.
-        - `альтернативные решения`  
+        - `альтернативные решения`
         Если у вас легаси или код на каких-то редких технологиях, то для них наверняка есть свои решения.
     </script></section>
 </section>
@@ -212,13 +212,13 @@
     </script></section>
     <section data-markdown><script type="text/template">
         ### Синтаксис
-        
+
         Пример объявления переменной в TypeScript:
-        
+
         ```ts
         const a: number = 10;
         ```
-        Тип описывается после символа `:`.  
+        Тип описывается после символа `:`.
         Примитивные типы пишутся с маленькой буквы.
     </script></section>
 
@@ -230,7 +230,7 @@
         const b: string = 'abc';
         const c: boolean = a < 30;
         ```
-        
+
     </script></section>
     <section data-markdown><script type="text/template">
         ### Пробуем обмануть систему
@@ -256,33 +256,33 @@
         ```ts
         const stringArr: Array<string> = ['abc', 's'];
         ```
-        
+
         Про этот синтаксис поговорим дальше, а пока будем пользоваться синтаксисом `string[]`.
     </script></section>
     <section data-markdown data-transition="slide none"><script type="text/template">
         ### Массивы, что можно сложить внутрь
-        
+
         Валидны ли эти конструкции?
         ```ts
         const a: number[] = [1, 2, 3, "4"]; // ?
         const b: number[] = [];     // ?
         ```
-        
+
     </script></section>
     <section data-markdown data-transition="none slide"><script type="text/template">
         ### Массивы, что можно сложить внутрь
-        
+
         Валидны ли эти конструкции?
         ```ts
         const a: number[] = [1, 2, 3, "4"]; // Error: Type 'string' is not assignable to type 'number'.(2322)
         const b: number[] = [];     // Все нормально
         ```
-        
+
     </script></section>
 
     <section data-markdown><script type="text/template">
         ### Что делать, если надо сложить значения разного типа?
-        
+
         ```ts
         const user: ? = ['Всеволод', 19, 'Екатеринбург', true];
         ```
@@ -292,8 +292,8 @@
         ### Tuple (кортеж)
 
         ```ts
-        const user: 
-            [string, number, string, boolean] 
+        const user:
+            [string, number, string, boolean]
             = ['Всеволод', 19, 'Екатеринбург', true];
         ```
     </script></section>
@@ -347,9 +347,9 @@
     </script></section>
     <section data-markdown><script type="text/template">
         ### null и undefined
-        
+
         Без дополнительных настроек, null и undefined могут быть значением переменной любого типа:
-        
+
         ```ts
         const a: string = null;
         const b: number = undefined;
@@ -361,7 +361,7 @@
     </script></section>
     <section data-markdown><script type="text/template">
         ### Автоматический вывод типов
-        
+
         ```ts
         let a = 10;   // a: number
         let b = a;    // b: number
@@ -376,12 +376,12 @@
         const a = [1, 2, 3];// a: number[]
         const b = [0, 1];   // b: number[]
         ```
-        
-        Если нужен tuple — придется писать явно. 
+
+        Если нужен tuple — придется писать явно.
     </script></section>
     <section data-markdown><script type="text/template">
         ### Пора писать код!
-        
+
         [Задача](https://www.typescriptlang.org/play/?strictNullChecks=false#code/PQKgsAUABDWOgggGEECwgDCcIFQQiCA4QQ-CBcOwgCgYiBaByIFFlPoLwgCg4iCCsINVoPIgUSg3CBsCGANFACN+AYwpQAJvwwJAXCD86GQHwggRhBA0iCRYUagyhqOiqIsASIFmWKZUGYsA8IHi4ksAOkghgkSMID2AOwDOAFyhuKABeKAAzbgAbXwBTAG4PHwDBUIjouMSILz9A0TDImISk3Ik0wsz3CBKUgEcARjTuLJy6gCY08QBtAAYAXRbkwNqAZjTajoBqKAaoafFHKNjvAHN-AAtB0tqAFjSBReW19bnBLra+w9WNrbqAVn3QkLDhLvq+3oGa4YA2NNf3p8ni83h9+p9bsMAOzjP7PMK1B7wqAAj7vSEzAAcAC4oN4AK5RKL-CFAA)
     </script></section>
 </section>
@@ -391,13 +391,13 @@
     </script></section>
     <section data-markdown><script type="text/template">
         ### Типы — множества
-        
+
         Все типы в TS — это множества.
-        
-        Например, тип `number` — множество всех чисел:  
-        - всех поддерживаемых систем счисления,   
-        - целых и десятичных,  
-        - включая `Infinity`, `NaN`, `-0`   
+
+        Например, тип `number` — множество всех чисел:
+        - всех поддерживаемых систем счисления,
+        - целых и десятичных,
+        - включая `Infinity`, `NaN`, `-0`
     </script></section>
     <section data-markdown><script type="text/template">
         ### Как думаете
@@ -406,7 +406,7 @@
     </script></section>
     <section data-markdown><script type="text/template">
         ### Единичные множества
-        
+
         ```ts
         const a: 10 = 10;
         const b: true = true;
@@ -467,26 +467,26 @@
                 <img src="img/10isNumber-3.png" height="405" alt="10 is number? yes">
             </div>
         </div>
-        
+
     </script></section>
     <section data-markdown><script type="text/template">
         ### Как это работает
-        
+
         ```ts
         const a = "str";
         const b: number = a;
         ```
-        
+
         <div style="position: relative;">
             <img src="img/strIsNumber-1.png" height="450" alt="str is number?">
             <img src="img/strIsNumber-2.png" height="450" alt="str is number? yes" class="fragment" style="position: absolute; left: 0">
             <img src="img/strIsNumber-3.png" height="450" alt="str is number? yes" class="fragment" style="position: absolute; left: 0">
         </div>
-        
+
     </script></section>
     <section data-markdown data-transition="none"><script type="text/template">
         ### Кортеж и массив
-        
+
         Валиден ли следующий код?
         ```ts
         const a: [number, number, number] = [1, 2, 3];
@@ -500,7 +500,7 @@
     </script></section>
     <section data-markdown data-transition="none"><script type="text/template">
         ### Кортеж и массив
-        
+
         Валиден ли следующий код?
         ```ts
         const a: [number, number, number] = [1, 2, 3];
@@ -523,7 +523,7 @@
     </script></section>
     <section data-markdown><script type="text/template">
         ### Any
-        
+
         ```ts
         let a: any = null;
         a = 10;
@@ -531,15 +531,15 @@
         a = "lalaka";
         a = [1, 2, 3];
         ```
-        
+
     </script></section>
     <section data-markdown><script type="text/template">
         ### Any как множество
 
-        - any является множеством абсолютно всех возможных значений. 
+        - any является множеством абсолютно всех возможных значений.
         - any является подмножеством абсолютно любого типа.
         <img src="img/any.png" alt="any">
-        
+
     </script></section>
     <section data-markdown><script type="text/template">
         ### Any как подмножество любого типа
@@ -553,14 +553,14 @@
     </script></section>
     <section data-markdown><script type="text/template">
         ### Как думаете
-        
+
         Когда стоит использовать `any`?
     </script></section>
     <section data-markdown><script type="text/template">
         ### Когда использовать
 
         Для any TS отключает все проверки типов. Просто работает в режиме JS.
-        
+
         Использовать any стоит:
         - если проект только начали внедрять TS и еще не все успели переписать, легаси пусть будет с any
         - чтобы парсить незнакомый JSON
@@ -571,9 +571,9 @@
     </script></section>
     <section data-markdown><script type="text/template">
         ### Font-weight
-        
+
         Попробуем описать переменную, которая будет хранить значение css-свойства font-weight:
-        
+
         ```ts
         let fontWeight: ? = "bold";
         fontWeight = 600;
@@ -581,9 +581,9 @@
     </script></section>
     <section data-markdown><script type="text/template">
         ### Font-weight
-        
+
         Можно написать `any`:
-        
+
         ```ts
         let fontWeight: any = "bold";
         fontWeight = 600;
@@ -593,19 +593,19 @@
     </script></section>
     <section data-markdown><script type="text/template">
         ### Font-weight
-        
-        Нужен какой-то тип, который разрешит записывать только строки или числа. 
+
+        Нужен какой-то тип, который разрешит записывать только строки или числа.
         Это называется объединение типов:
         ```ts
-        let fontWeight: number | string = "bold"; 
+        let fontWeight: number | string = "bold";
         ```
         <img src="img/numberAndString.png" alt="number and string">
     </script></section>
     <section data-markdown><script type="text/template">
         ### Font-weight
-        
+
         Усложним задачу. Теперь мы хотим, чтобы еще null и undefined можно было записать.
-        
+
         ```ts
         let fontWeight: ? = "bold";
         fontWeight = 600;
@@ -616,7 +616,7 @@
     </script></section>
     <section data-markdown><script type="text/template">
         ### Font-weight
-        
+
         ```ts
         let fontWeight: number | string | null | undefined = "bold";
         fontWeight = 600;
@@ -627,7 +627,7 @@
     </script></section>
     <section data-markdown><script type="text/template">
         ### Font-weight
-        
+
         ```ts
         let fontWeight: number | string | null | undefined = "lalaka";
         fontWeight = -300;
@@ -637,7 +637,7 @@
     </script></section>
     <section data-markdown><script type="text/template">
         ### Font-weight
-        
+
         ```ts
         let fontWeight: "bold" | "bolder" | 500 | 600 | null | undefined = "bold";
         fontWeight = 600;
@@ -650,7 +650,7 @@
     </script></section>
     <section data-markdown><script type="text/template">
         ### Объединение массивов
-        
+
         ```ts
         const a: number[] | string[] = [1, 2, 3];
         const b: number[] | string[] = ["lalaka"];
@@ -690,9 +690,9 @@
         ### Пересечение типов
 
         ```ts
-        const a: number & string = ???; 
+        const a: number & string = ???;
         ```
-        
+
     </script></section>
     <section data-markdown><script type="text/template">
         ### Пересечение типов
@@ -701,16 +701,16 @@
 
         Пересечение множества `string` и `number` = `∅`. Пустое множество соответствует типу `never` в TS.
         ```ts
-        const a: number & string = ???; // Такого значения не существует 
+        const a: number & string = ???; // Такого значения не существует
         ```
     </script></section>
     <section data-markdown data-transition="none"><script type="text/template">
         ### Пересечение типов
 
-        Для примитивов и кортежей пересечение бессмысленно — оно порождает пустое множество.   
-        Для массивов однако это множество будет не пустым. 
+        Для примитивов и кортежей пересечение бессмысленно — оно порождает пустое множество.
+        Для массивов однако это множество будет не пустым.
         Как думаете, что будет валидным значением для переменных `a` и `b`?
-        
+
         ```ts
         const a: (number & string & boolean)[] = ?;
         const b: number[] & string[] & boolean[] = ?;
@@ -719,13 +719,13 @@
     <section data-markdown data-transition="none"><script type="text/template">
         ### Пересечение типов
 
-        Для примитивов и кортежей пересечение бессмысленно — оно порождает пустое множество.   
-        Для массивов однако это множество будет не пустым. 
+        Для примитивов и кортежей пересечение бессмысленно — оно порождает пустое множество.
+        Для массивов однако это множество будет не пустым.
         Как думаете, что будет валидным значением для переменных `a` и `b`?
-        
+
         ```ts
         const a: (number & string & boolean)[] = []; // Пустой массив подходит
-        const b: number[] & string[] & boolean[] = []; 
+        const b: number[] & string[] & boolean[] = [];
         ```
     </script></section>
     <section data-markdown ><script type="text/template">
@@ -745,14 +745,14 @@
     </script></section>
     <section data-markdown><script type="text/template">
         ### Тип объекта
-        
+
         ```ts
         const a = { a: 10 }; // { a: number }
         ```
     </script></section>
     <section data-markdown><script type="text/template">
         ### Тип объекта
-        
+
         Почему вывелся тип не `{ a: 10 }`, а `{ a: number }`?
 
         ```ts
@@ -761,7 +761,7 @@
     </script></section>
     <section data-markdown data-transition="none"><script type="text/template">
         ### Что можно сложить в объект
-        
+
         Валидны ли эти строки?
         ```ts
         const a: { a: number } = { b: 10 }; // ?
@@ -772,7 +772,7 @@
     </script></section>
     <section data-markdown data-transition="none"><script type="text/template">
         ### Что можно сложить в объект
-        
+
         Валидны ли эти строки?
         ```ts
         const a: { a: number } = { b: 10 }; // Error: Type '{ b: number; }' is not assignable to type '{ a: number; }'.
@@ -786,7 +786,7 @@
 
         А если обмануть систему?
         ```ts
-        const a = { a: 10, b: "lalaka" }; 
+        const a = { a: 10, b: "lalaka" };
         a.a = 300       // ?
         a.a = "malaka"; // ?
         a.z = true;     // ?
@@ -804,7 +804,7 @@
         ```
     </script></section>
     <section data-markdown><script type="text/template">
-        ### Проверка типов объектов 
+        ### Проверка типов объектов
 
         ```ts
         let x: {a: number, b: string};
@@ -813,7 +813,7 @@
         ```
         <p class="fragment">
             Объект <code>y</code> совместим с типом объекта <code>x</code>, если у объекта <code>y</code> есть все поля,
-            которые есть у <code>x</code> и тип этих полей совместим с типом полей <code>x</code> 
+            которые есть у <code>x</code> и тип этих полей совместим с типом полей <code>x</code>
         </p>
     </script></section>
     <section data-markdown data-transition="none"><script type="text/template">
@@ -868,16 +868,16 @@
     </script></section>
     <section data-markdown><script type="text/template">
         ### Type alias
-        
+
         Это возможность описать типы отдельно от объявления переменных.
-        
+
         ```ts
         type MyType = string;
         ```
     </script></section>
     <section data-markdown><script type="text/template">
         ### Type alias
-        
+
         ```ts
         type A = string
         type B = number | boolean
@@ -899,7 +899,7 @@
     </script></section>
     <section data-markdown><script type="text/template">
         ### typeof
-        
+
         Может понадобиться сохранить тип какой-то переменной:
         ```ts
         const x = {a: "lalaka", b: 10};
@@ -911,7 +911,7 @@
     </script></section>
     <section data-markdown data-transition="none"><script type="text/template">
         ### Как думаете
-        
+
         Какие будут типы у переменных `b` и `c`?
         ```ts
         const a = [1, 2, 3];
@@ -921,7 +921,7 @@
     </script></section>
     <section data-markdown data-transition="none"><script type="text/template">
         ### Как думаете
-        
+
         Какие будут типы у переменных `b` и `c`?
         ```ts
         const a = [1, 2, 3];
@@ -937,10 +937,10 @@
         let c = typeof a;   // "string" | "number" | "bigint" | "boolean" | "symbol" | "undefined" | "object" | "function"
         ```
         Как TS не путает какой `typeof` использовать?
-        
+
         <p class="fragment">
             TS различает контекст использования.<br>
-            <code>typeof</code> в месте, где объявляются типы — взять тип у переменной.<br>  
+            <code>typeof</code> в месте, где объявляются типы — взять тип у переменной.<br>
             <code>typeof</code> в обычном коде — используем <code>typeof</code> из JS
         </p>
     </script></section>
@@ -949,28 +949,28 @@
     </script></section>
     <section data-markdown><script type="text/template">
         ### Interface
-        
+
         ```ts
         interface A {
             a: number;
             b: string:
             q: boolean;
         }
-        
+
         const a: A = {
             a: 100500,
             b: "lalaka",
             q: false,
         };
         ```
-        
+
         Обычно объекты описываются интерфейсами, а не `type alias`.
     </script></section>
     <section data-markdown><script type="text/template">
         ### Interface vs type alias
-        
+
         **1. type alias может содержать не только объект**
-        
+
         ```ts
         interface A {
             a: number
@@ -984,9 +984,9 @@
     </script></section>
     <section data-markdown><script type="text/template">
         ### Interface vs type alias
-        
+
         **2. При объявлении интерфейсов с одинаковым именем тип объекта расширяется...**
-        
+
         ```ts
         interface A {
             a: number;
@@ -1001,9 +1001,9 @@
     </script></section>
     <section data-markdown><script type="text/template">
         ### Interface vs type alias
-        
+
         **2. ...а объявить два type alias с одинаковым именем нельзя**
-        
+
         ```ts
         type A = { //Error: Duplicate identifier 'A'.
             a: number;
@@ -1016,9 +1016,9 @@
     </script></section>
     <section data-markdown><script type="text/template">
         ### Interface vs type alias
-        
+
         **3. Интерфейсы могут наследоваться друг от друга**
-        
+
         ```ts
         interface A {
             a: number;
@@ -1036,12 +1036,12 @@
         const b: B = { a: 15, b: "lalaka" };
         const c: C = { a: 20, c: true };
         ```
-        
+
         Type alias не наследуются.
     </script></section>
     <section data-markdown><script type="text/template">
         ### Interface vs type alias
-        
+
         - Интерфейсы позволяют типизировать только объекты
         - Type alias предназначены для хранения абсолютно любого типа
         - Интерфейсы умеют наследоваться и расширяться
@@ -1079,7 +1079,7 @@
             button
         ];
         ```
-        Собрали массив из элементов базового класса. 
+        Собрали массив из элементов базового класса.
     </script></section>
     <section data-markdown><script type="text/template">
         ### Пример использования наследования
@@ -1091,14 +1091,14 @@
         q.textContent // Error: Property 'textContent' does not exist on type 'DomElement'.
         tree[1].textContent // Error: Property 'textContent' does not exist on type 'DomElement'.
         ```
-        Но при использовании элемента в роли его базового типа, все дополнительные поля теряются. 
+        Но при использовании элемента в роли его базового типа, все дополнительные поля теряются.
     </script></section>
     <section data-markdown><script type="text/template">
         ## Readonly и optional
     </script></section>
     <section data-markdown><script type="text/template">
         ### Readonly
-        
+
         ```ts
         interface A {
             readonly a: number;
@@ -1106,18 +1106,18 @@
         }
         ```
 
-        Значение этоих полей указывается во время инициализации объекта. 
+        Значение этоих полей указывается во время инициализации объекта.
         Присвоить новое значение таким полям нельзя - можно только полностью заменить весь объект.
     </script></section>
     <section data-markdown><script type="text/template">
         ### Readonly
-        
+
         ```ts
         interface A {
             readonly a: number;
             b: string;
         }
-        
+
         let a: A;
         a = { a: 10, b: "lalaka" }
 
@@ -1129,7 +1129,7 @@
     </script></section>
     <section data-markdown><script type="text/template">
         ### Optional
-        
+
         ```ts
         interface A {
             a?: number;
@@ -1142,7 +1142,7 @@
     </script></section>
     <section data-markdown><script type="text/template">
         ### Индексаторы
-        
+
         ```ts
         interface A {
             [index: number]: boolean;
@@ -1153,14 +1153,14 @@
             [-1]: false
         }
         ```
-        
+
         У интерфейса A нет конкретных названий полей, известно только, что они числа.
-        
+
         Индексаторы могут быть только типа `string` или `number`.
     </script></section>
     <section data-markdown data-transition="none"><script type="text/template">
         ### Как думаете
-        
+
         это валидный код?
         ```ts
         interface A {
@@ -1173,7 +1173,7 @@
     </script></section>
     <section data-markdown data-transition="none"><script type="text/template">
         ### Как думаете
-        
+
         это валидный код?
         ```ts
         interface A {
@@ -1186,7 +1186,7 @@
     </script></section>
     <section data-markdown data-transition="none"><script type="text/template">
         ### Как думаете
-        
+
         а это валидный код?
         ```ts
         interface A {
@@ -1199,7 +1199,7 @@
     </script></section>
     <section data-markdown data-transition="none"><script type="text/template">
         ### Как думаете
-        
+
         а это валидный код?
         ```ts
         interface A {
@@ -1212,13 +1212,13 @@
     </script></section>
     <section data-markdown><script type="text/template">
         ### Оба типа индексатора в одном объекте
-        
+
         ```ts
         interface A {
             [index: string]: number | string;
             [index: number]: string;
         }
-        
+
         const a: A = {
             "lalaka": "malaka",
             "str": 42,
@@ -1229,7 +1229,7 @@
     </script></section>
     <section data-markdown><script type="text/template">
         ### Оба типа индексатора в одном объекте
-        
+
         Значения у индексатора типа `number` должны быть совместимы со значениями индексатора `string`
         ```ts
         interface A {
@@ -1248,7 +1248,7 @@
     </script></section>
     <section data-markdown><script type="text/template">
         ### Пересечение объектов
-        
+
         ```ts
         interface A { a: number; }
 
@@ -1287,7 +1287,7 @@
     </script></section>
     <section data-markdown><script type="text/template">
         ### Тип значения по ключу в объекте
-        
+
         Можно делать так
         ```ts
         interface A {
@@ -1304,7 +1304,7 @@
     </script></section>
     <section data-markdown><script type="text/template">
         ### Тип значения по ключу в объекте
-        
+
         Можно брать пересечения
         ```ts
         interface A {
@@ -1320,45 +1320,45 @@
     </script></section>
     <section data-markdown><script type="text/template">
         ### Где это используется
-        
+
         ```ts
         const style: HTMLElement["style"] = {...}
         ```
-        
-        Типизировали переменную: теперь в нее можно положить только подходящие значения для атрибута `style` в HTML. 
+
+        Типизировали переменную: теперь в нее можно положить только подходящие значения для атрибута `style` в HTML.
     </script></section>
     <section data-markdown><script type="text/template">
         ### keyof
-        
+
         Можно получить объединение названий ключей:
-        
+
         ```ts
         interface A {
             a: number;
             b: string;
             c: boolean;
         }
-        
+
         type Keys = keyof A // "a" | "b" | "c"
         ```
-        
+
         Ну, почти как `Object.keys(A)` только с типами
     </script></section>
     <section data-markdown><script type="text/template">
         ### keyof
-        
+
         Можно получить объединение типов значений:
-        
+
         ```ts
         interface A {
             a: number;
             b: string;
             c: boolean;
         }
-        
+
         type Q = A[keyof A] // number | string | boolean
         ```
-        
+
         А это как `Object.values(A)` только с типами
     </script></section>
     <section data-markdown ><script type="text/template">
@@ -1373,45 +1373,45 @@
     </script></section>
     <section data-markdown><script type="text/template">
         ### Синтаксис функций
-        
+
         ```ts
         function foo(a: string, b: string) {
-        
+
         }
         ```
-        
+
         В данном примере функция `foo` принимает два аргумента, оба из которых — строки.
     </script></section>
     <section data-markdown data-transition="none"><script type="text/template">
         ### Как думаете
-        
+
         Это валидный код?
         ```ts
         function foo(a: number) {}
-        
+
         foo()       // ?
         foo(10, 15) // ?
         ```
-        
+
     </script></section>
     <section data-markdown data-transition="none"><script type="text/template">
         ### Как думаете
-        
+
         Это валидный код?
         ```ts
         function foo(a: number) {}
-        
+
         foo()       // Error: Expected 1 arguments, but got 0.
         foo(10, 15) // Error: Expected 1 arguments, but got 2.
         ```
     </script></section>
     <section data-markdown><script type="text/template">
         ### Необязательные параметры
-        
+
         ```ts
         function foo(a: number, b?: number) { // b: number | undefined
         }
-        
+
         foo(10);
         foo(10, 15);
         ```
@@ -1419,20 +1419,20 @@
     </script></section>
     <section data-markdown><script type="text/template">
         ### Дефолтные значения аргументов
-        
+
         ```ts
         function foo(a: number = 10) {}
-        
+
         foo(); // a = 10
         foo(100); // a = 100
         ```
     </script></section>
     <section data-markdown><script type="text/template">
         ### Автовывод типа параметров
-        
+
         ```ts
         function foo(a = 10) {}
-        
+
         foo(); // a = 10
         foo(100); // a = 100
         foo("lalaka") // Error: Argument of type '"lalaka"' is not assignable to parameter of type 'number'
@@ -1440,14 +1440,14 @@
     </script></section>
     <section data-markdown><script type="text/template">
         ### rest-параметры
-        
+
         ```ts
         function foo(...rest: number[]) {}
         ```
     </script></section>
     <section data-markdown><script type="text/template">
         ### Типизация this
-        
+
         ```ts
         function sumWith(this: number, b: number) {
             const c: number = this + b;
@@ -1456,7 +1456,7 @@
     </script></section>
     <section data-markdown><script type="text/template">
         ### Типизация this
-        
+
         ```ts
         function foo(this: number) {}
 
@@ -1469,10 +1469,10 @@
     </script></section>
     <section data-markdown><script type="text/template">
         ### Типизация возвращаемого значения
-        
+
         ```ts
         function foo(): number {}
-        
+
         function bar(): number {
             return "lalaka"; //Error: Type '"lalaka"' is not assignable to type 'number'
         }
@@ -1480,7 +1480,7 @@
     </script></section>
     <section data-markdown><script type="text/template">
         ### Типизация возвращаемого значения
-        
+
         ```ts
         function foo(): void {}
 
@@ -1491,7 +1491,7 @@
     </script></section>
     <section data-markdown><script type="text/template">
         ### Автовывод типа возвращаемого значения
-        
+
         ```ts
         function foo() {
         } //: void
@@ -1503,7 +1503,7 @@
     </script></section>
     <section data-markdown><script type="text/template">
         ### Сохранение типа функции
-        
+
         ```ts
         type F = (a: string, b?: boolean) => void;
         const f2: F = a => console.log(a);
@@ -1511,7 +1511,7 @@
     </script></section>
     <section data-markdown><script type="text/template">
         ### В инициализации можно опускать параметры
-        
+
         Нормально, если в типе указано больше параметров, чем в инициализации.
         ```ts
         type F = (a: number) => void
@@ -1527,24 +1527,24 @@
     </script></section>
     <section data-markdown><script type="text/template">
         ### Разное поведение для разных типов
-        
+
         Если нам нужно, чтобы для разных типов входных значений был разный результат. Можно было бы попробовать так:
         ```ts
 function lalaka(a: "string" | "number", b: string | number): any {
-    if (a === "string") { 
+    if (a === "string") {
              return { a: b }
     } else {
              return b + 15; //Error: Operator '+' cannot be applied to types 'string | number' and 'number'.
     }
 }
         ```
-        
-        TS не может гарантировать, что при первом аргументе `"number"`, второй будет числом. 
-        Эти два аргумента независимы. 
+
+        TS не может гарантировать, что при первом аргументе `"number"`, второй будет числом.
+        Эти два аргумента независимы.
     </script></section>
     <section data-markdown><script type="text/template">
         ### Перегрузки функций
-        
+
         ```ts
         function foo(a: number): number;
         function foo(a: string): string;
@@ -1552,8 +1552,8 @@ function lalaka(a: "string" | "number", b: string | number): any {
             return a;
         }
         ```
-        Сначала описываем типы, потом реализацию функции.  
-        
+        Сначала описываем типы, потом реализацию функции.
+
         ```ts
         const a: number = foo(10) + 15;
         const b: string = foo(10); // Error: Type 'number' is not assignable to type 'string'.
@@ -1562,7 +1562,7 @@ function lalaka(a: "string" | "number", b: string | number): any {
     </script></section>
     <section data-markdown><script type="text/template">
         ### Перегрузки функций
-        
+
         Реализация функции должна реализовывать все перегрузки
         ```ts
         function foo(a: number): boolean; //Error: This overload signature is not compatible with its implementation signature.
@@ -1578,7 +1578,7 @@ function lalaka(a: "string" | "number", b: string | number): any {
     </script></section>
     <section data-markdown><script type="text/template">
         ### Перегрузки функций
-        
+
         Та функция, с которой начали обсуждать перегрузки выглядит так:
         ```ts
         function lalaka(a: "number", b: number): number
@@ -1597,7 +1597,7 @@ function lalaka(a: "string" | "number", b: string | number): any {
     </script></section>
     <section data-markdown><script type="text/template">
         ### Функция как объект
-        
+
         Функции в JS — это объекты, поэтому в TS их можно описать интерфейсами, как и объекты:
         ```ts
         interface B {
@@ -1619,7 +1619,7 @@ function lalaka(a: "string" | "number", b: string | number): any {
     </script></section>
     <section data-markdown><script type="text/template">
         ### Практика
-        
+
         - [Задание #1](https://www.typescriptlang.org/play/index.html#code/PQKgsAUABDWLgghhEEGwgheEEHwgVBCIIDhBD8INwdhBtABEDUCYQQBhBNAZECmxU0FYQYwERBHBOEEEEQKAYQEMANgGMArgL4AXAPYAnADRYKgLhAFgcRBMaQIwggaRAoZbQXK6ABkMGjx0mcag7A3CDYokWFG5pAEiDZNSioB4QR0povvh2gPIggGIg2I7YDraMBFAo2ICiIHpQBBRk2JzYvmicOFBomFC4zIyALCAUKCjaqbgUxH6MmKRkAHTOsIBEIHi6AMoiALYAgkISAJZSAHYKADIAptMA5hIAFmOTMwoAWgsyUptT04pKSIxQeagYvowooTSdECDAkJASAJ4ADgtQg6PjY5QAC8UAAFO1IV8+DI+EMAM4ALigfGmHwAlCCAHwotEAbne31+ixW6yOMxB4Mh7WhsIRyNRGOxuI+BIgnx+UD2B3JJ1BEKhMLhSJZmOBOMZbI5xKky15lIFNKF9NFzMVtOFDLRYol+LeEAm0wk+wAZnwhL9+MIxJJZFAAN5dGBgoRSIZDVEAE2R8IkMkNy3RyP+vLZLhdbo9029UF9-pWQagJNWG0BMzDsAj7q9Pr9AcT3MOaemGedruz0dz8cDyLmstDkAAvvrQFBALQgGhKgQqWFIgGYQKi0FAXFDIdBQF6QV3TX1QMzWyyyZFWiy2mQK8tRmNx-Naj7Mx3QWDwgDuEwkQjW4M3Xsxh5cLjM8N+ACJ4cMX4inQ+XDIFhIRBkE4wT4PcFAAIz3HUUSgABqKBwNLB8n1fAQlhTT9vx-GA-wAoDwVA1VxRRdo0NJNYkMfPhnygF8AC99ikTCj2w2BcMA4DCMZaDpSkE0YOBQTaJ3FYXygAB+EiyJTKAAEIhIABigBk5MUyjYBQ2iBFlZjWN-f8OPBSCiJxECoOZABZSQ1lI2UQMxYAoCs9ZbOWMFwPRb9mwgbzWwAWgCidXggSBW0ARBB4iKTxNDQJQgqncwbSsME3w-dEwQARgUhQMoAVk8iB51XZKX2k9YX3Sl8AEcTwWGq6oqhKFzXFKGIOCrMoUgqiqS2RWsYjrqtq+rGsKmZZwEPk50SxcZBS7Tlg65ybIAUQKybMvyprir60qdPSgAmQ7coANgK8LIo8LxYvikKIFbQBCECirwfH8W6etm+bBD4ABrPhBo9cQ-tG7berm1Khg6v0RAWbqZpaiGOqyuHmpK99IcqjKQcK+GSrKtYka60HPtK9DyvS6HYeJhH8cG-6FBfcDsY+hG2qY9KspyomcdR3a2cJhmstGlmSv5zGFJfLmUZ28GxbBSnpbB-r2vS+1G0Vkm5YAbQAXQK6m8f2lKFmF3HdoWwahY1mmjYVg3zaN5GUqyiXrcNxaOa6+WZBht2HY9sEDq5g6ABZzpAKAAr8oKgA)
         - [Задание #2](https://www.typescriptlang.org/play/#code/PQKgsAUABDWCgggGEELwghpECkwrCCEEQQXCCD4QQbhBAZEHykHYQBQZhA9AhED0CYQAjJVQURAoAXATwAcBTKAEMANgEtBAZwB0UQPgggARBAHCBRA-CB5APCB5AkiDKki9gCIseQIwg85Aag1FKqAGUOAVwAmfAHYcpkWFECEIKYwlGgwrGzQAFT5BAGMACz4AJyhlABFRBL5ojgB7JMUyZPUMQDkQHVYsQHkQULV6GTgCKpV5BkCcZUUsNWIyQGEQQE4QYO9YFUCMIpYUEPooLARNdXR8nplAHBA8QDYQJDwoPCaMQBYQDAaaInQGSeqUL2hYIZhImPi8oowaZMOka0AREEUcBDp5AAaQoVYE9Zr0ZinXCKAgIZIzAgMBDyU75KAYahQHDg4y1O5QQBIIIjkfIQjj5HioA84okALTwtTYgjFQDiID0oKJnNjcfCmOtFG9TIApEAwODeWHezG+v3+eGaCwps0BBKQCDI9GQijGCOaxGKUB6rMFRwq1wJaQyWVyhQwryln0UPz+AOBinUoJJmtRMxoPQ+dGmyiwSO9pyNJqYfRkvlDKKIBKwfoDDFU2y5vv90vhxkO8gFQpMovFMwdMpd8o0CPdzB1SaznwQ1x8sdJ4eNwSjac53IjnaqucCBZ2RbFErLTtlAI0bvGYzBEMw6gJyjwgDEQZj4PqGjumyAgYCQbj8KAAVQkiSgAF4oABvAlcgBcUAkHASojcAHMANwEtyCABbPhn1fd8v1-CAAF9ICPXgBAAYWyRwEgva87wfZxnzcRwAIAI0SCCfA4UQOGEYCXzfD8f0gaCIFgk8AHUSNiAAlQQOAEG97xuGAEnY8iAEYoAAHygAAmESoAAZkkgAWSSAFYINo+iBCYjhYgcFx3A4FjsjItDuJ8BJ9PIgxX20jwDBomCIGPNTmJpJ49IMriCRMsjnwMDjHkSayoNs+yoHU2IABk+AANz4YRDIJMiouELyACtHDcURcksUSDAArlnDIzKoHM9x0oSfzaNAKA6SqqAD0CuD7CcVwPEQ5DUJvFqUIEAAyYLmK0prdNMqAepCtiOOG3qNPChLVIayyODQ89Lx628oGiJDOokZ9VoAbSfKBsLwxIAF1n36nSOtQyCoBUuz6qcy8byWhI6pPS1MhyJInovBIIMgUBqrkCFWnhSq6VqiB1rcV8XwEs7Gp02KeJ7LyJAEgwVWR-8gNR9HMZ8dbWr4Lb0ORnwdoE07SZ8GnYH2gT8dpmniNIsyADF0lfDGCSZqA+I458FMZ3neNM1GEas4WRfi6KvJy5w8r4fzedonxIMx26oZhjg4epKJaS+6m6cwwqde5rHALMs2pZlxLCpStKMqlwnNu2nnYB2hSqaMkWYH2oX3dplnPMKjmADMNPN33RZD7z9aeZWmfVwOoAp72U58KQs7RqQXYvCQ06l3mPKt+O-JT1XYFozXsmhhbnF197rUNn2-ZNgwG6j2BsbMzupYsgaSdbmmdvM9GqbRouPfMsSDHTsmmf2meu99nvUdniuCWT5GfINoeU9Hs35+jqAs6kHWp9p-nyKky+brvw-Z+P6Ol44We758NfTffjPYFt1HipO1-rxfigtN7I2rrZCqVU6Q1WAEAA)
         - [Задание #3](https://www.typescriptlang.org/play/index.html#code/PQKgsAUABFgEIIrCCAYQQ3CCA4QQ7CCGEQQnCCCEQeUgIiCaC8IIFwggYiCqByIFALYCGA1gKYDKALiwA4A0UZQHwguQYAEQRIHkQKIH4QQTNHxALCCBpEEWZAkiDxAPCCYogQRBBekRJI0oqQMwgo5VEBMIIPS3x6xPFyQYe5EszVNBVDQoADsAVwAbcIA6OCQ0LDwCWz0CEnhBQEYQQFEQQUVULWUCRWQpNIJcVGllGMAMEHQM+AtERKgGYIBPKMgPKABxBjp2DgYuAC4emABaegZuKGmtRD09VFtzK0FbZSyoTMApEHgyETWACkBxEBEoQFkQS9xEIQJp00A2EHgASgn5qG5whnaWABOAAUAPYAZy+qEUhz0128WngJDu61EgjIiDsUEWy1WAQ2Wx2+0Ox0+0zBAGMQQCWF98GQNKhsPozm5SVAOKEAcEviRBAjRFA6RpGnIcopEN1oFAavjBEyiUcvjc5EZUej+EIROIpNJRKhTIs3LtFLzzOh9N41H5UDt0CRECzTNhRjA2QAiIFuyEbMjugCiXumTkQFndABlA-o0ajbKhNO6APqRvT2DK5e1SMjeXDoyUwQBYIIhniomWKUWioCcPW63jJlHc3HodfAFAijKhcIAZECbdl1iHsMUASCBQdD91ArLSGCq7XCCwQWQQa+5ynqWGNy3YZA6K+1ijs9vR92wY4Tl9XyQTjsUSWdeHzWgi69IZcToTaIUwScZSqZQQCoIF4qD6EeGIppk6aSAI2bopWbpJrW0xrhW0gtto8AuI2pSgam6a+FBbj0t+MDEVAADa1b8HBboALrzAAfGRVGUZ61EANykgBQSHuIx5RmQMZxgQVYRghZ5QA0Ci3tGmyCfwU6uLgB44SakFZgRiBESRjGepREa0ZMDHkTpUBUbRABkUAUlSNIALyWZS1JQAA1FAACM7E-vMnFAdx-YYsGFiwQGolIWQUCYBkqwKXY4gLnJRgKQe0mxpomkkUZbqUQG+mGRRJl6R5PQyuII73B+ZxRZhGrzuK3y-P8wLglANktTM3BROELDBAA5hwAAW8yuTEgAoICU1wiAuMysJwPBQIogjIM89o9LYLYkJgXYhBE0RFVYuiTktcijtImDtptZC8tIQhMgASqEwS1LKBAGEYggmKgBB6nomCYZiQgkAYaAxN5PSyLs-1nB+ZhrjYaz-YDQFpLOgiABIgqBpmF0x2g6HYohiCgoBg772nYa2CD0JyBEBwirbOsjzRY9poG8MSAGgg8DIIg+DIJ2vL8BcmSwwIRbzVoUC8vYYv9IMnAjCwkwEBkyjIOLmzKEyVxkOg2jSCUArYisx6rrKTLoqIuDVJAIDAJKHDtNwNLS0McvNa0HSSgAZvd5IcAAliC3KMNNXDcCcADedV-ICoJgvwjB8PZ1n8ByXJQAAvi6Tuy1wbyZwMztcFAAA+W2RFAYeQGnkqQKAkzTPmuSlSdegwTD8yTNbkCUsEYIcJZwwAhwACysyuxllFJhPmUmZPJkBlPWXT2688z0vEYL6vi8b26BVdwHvf9wwg-Zywecy8Mhd2RHVnUi6AAMcezC6vdH8Psz8D8UeNWC9-J5ywT33Th5TqfcX6X0PsfC+LAPLdwPiwAAHg7H2LAAAmAAVf+EI7IACYAAsMD959wQUgrgKC2AOVslAAAbIVCAJwvbBB9v7bk4QQQglDrWCunlYF92CAgjgJ9XZByGDwE4YCWBvA8iRX2HtKx8PgQIqBzVWphEiJwz4JFYEgk6h1EE3UTgAAMMGp0pPdDgLoAAkYdxFRBTsENOBiPieU0fvbRLBdH6IMeQ6yljrFQKiDfFgDjJEaOIjIysNi7FQAAIStWISwZB6DMHFxLjYwJMS4mIISaQ7xjki6pP8fHUiNj44dS6r1AakxXK0ViXZas6jnFaRgP1AEIIADuIQWAdL9ACVpAIqxsBBIMfqvtuRtNaT1GsUimnp1CTAakdjpkwCrtw1xOjySdSPicEJqye5uI8SceRii5ZRFKQAKxBKMqsNYnEkXEa7I5J8lmWRYBwNBvtBgglCBwE4rD2H8FcnfIFTi05vG2R5Wu0x27WyAA)
@@ -1631,14 +1631,14 @@ function lalaka(a: "string" | "number", b: string | number): any {
     </script></section>
     <section data-markdown><script type="text/template">
         ### Generics
-        
+
         **Generic тип** — тип, параметризированный другим типом.
-        
+
         Это возможность описывать типы, которые будут известны позже.
     </script></section>
     <section data-markdown><script type="text/template">
         ### Пример
-        
+
         Например, мы хотим типизировать вот такую функцию:
         ```js
         function createArray(...args) {
@@ -1651,7 +1651,7 @@ function lalaka(a: "string" | "number", b: string | number): any {
     </script></section>
     <section data-markdown><script type="text/template">
         ### Пример
-        
+
         Можем попробовать any:
         ```ts
         function createArray(...args: any[]): any[] {
@@ -1664,7 +1664,7 @@ function lalaka(a: "string" | "number", b: string | number): any {
     </script></section>
     <section data-markdown><script type="text/template">
         ### Пример
-        
+
         Можем явно указывать тип:
         ```ts
         function createArray(...args: number[]): number[] {
@@ -1679,7 +1679,7 @@ function lalaka(a: "string" | "number", b: string | number): any {
     </script></section>
     <section data-markdown><script type="text/template">
         ### Пример
-        
+
         Если будем указывать явно, то придется описать все возможные перегрузки:
         ```ts
         function createArray(...args: number[]): number[]
@@ -1696,7 +1696,7 @@ function lalaka(a: "string" | "number", b: string | number): any {
     </script></section>
     <section data-markdown><script type="text/template">
         ### Пример
-        
+
         Для таких сценариев существуют generic-типы
         ```ts
         function createArray<T>(...args: T[]): T[] {
@@ -1714,23 +1714,23 @@ function lalaka(a: "string" | "number", b: string | number): any {
     </script></section>
     <section data-markdown><script type="text/template">
         ### Еще пример
-        
-        Встроенный интерфейс `Array<T>`: 
-        - работа с массивом не зависит от типа его элементов 
+
+        Встроенный интерфейс `Array<T>`:
+        - работа с массивом не зависит от типа его элементов
         - необходимо не потерять тип элементов при обращении по индексу
-         
+
     </script></section>
     <section data-markdown><script type="text/template">
         ### Синтаксис
-        
+
         ```ts
         function funcWithGeneric<T>(): void {
             const a: T = ...
         }
         ```
-        
+
         В `<>` после названия функции и перед `()` указываются названия для generic
-            
+
         ```ts
         const funcWithGeneric = <T>(): void => {
             const a: T = ...
@@ -1739,7 +1739,7 @@ function lalaka(a: "string" | "number", b: string | number): any {
     </script></section>
     <section data-markdown><script type="text/template">
         ### Синтаксис
-        
+
         У одной функции может быть несколько generic-параметров
         ```ts
         function funcWithGeneric<T, S>(a: T, b: S): { value: S } {
@@ -1751,14 +1751,14 @@ function lalaka(a: "string" | "number", b: string | number): any {
     </script></section>
     <section data-markdown><script type="text/template">
         ### Generic в интерфейсах
-        
-        
+
+
         ```ts
         interface User<T> {
             name: string;
             id: T;
         }
-            
+
         const newUser: User<number> = {
             name: "John",
             id: 223,
@@ -1767,7 +1767,7 @@ function lalaka(a: "string" | "number", b: string | number): any {
     </script></section>
     <section data-markdown><script type="text/template">
         ### Generic в type alias
-        
+
         ```ts
         type UselessUnion<T, S> = T | S | boolean;
 
@@ -1776,7 +1776,7 @@ function lalaka(a: "string" | "number", b: string | number): any {
     </script></section>
     <section data-markdown><script type="text/template">
         ### Автовывод generic-типов
-        
+
         Можно не описывать тип явно:
         ```ts
         function createTuple<T>(value: T): [T] {
@@ -1789,7 +1789,7 @@ function lalaka(a: "string" | "number", b: string | number): any {
     </script></section>
     <section data-markdown data-transition="none"><script type="text/template">
         ### Как думаете
-        
+
         Валидные ли это конструкции?
         ```ts
         function createTuple<T>(value: T, secondValue: T): [T, T] {
@@ -1797,12 +1797,12 @@ function lalaka(a: "string" | "number", b: string | number): any {
         }
 
         const strAndNumInArr = createTuple("str", 25); // ?
-        const numbersInArr = createTuple(5, 25);       // ? 
+        const numbersInArr = createTuple(5, 25);       // ?
         ```
     </script></section>
     <section data-markdown data-transition="none"><script type="text/template">
         ### Как думаете
-        
+
         Валидные ли это конструкции?
         ```ts
         function createTuple<T>(value: T, secondValue: T): [T, T] {
@@ -1815,7 +1815,7 @@ function lalaka(a: "string" | "number", b: string | number): any {
     </script></section>
     <section data-markdown data-transition="none"><script type="text/template">
         ### Как думаете
-        
+
         Какого типа переменные?
         ```ts
         function doNothing<T>(value: T): T {
@@ -1828,7 +1828,7 @@ function lalaka(a: "string" | "number", b: string | number): any {
     </script></section>
     <section data-markdown data-transition="none"><script type="text/template">
         ### Как думаете
-        
+
         Какого типа переменные?
         ```ts
         function doNothing<T>(value: T): T {
@@ -1841,7 +1841,7 @@ function lalaka(a: "string" | "number", b: string | number): any {
     </script></section>
     <section data-markdown data-transition="none"><script type="text/template">
         ### Как думаете
-        
+
         Какого типа переменные?
         ```ts
         function doNothing<T>(value: T): T {
@@ -1854,7 +1854,7 @@ function lalaka(a: "string" | "number", b: string | number): any {
     </script></section>
     <section data-markdown data-transition="none"><script type="text/template">
         ### Как думаете
-        
+
         Какого типа переменные?
         ```ts
         function doNothing<T>(value: T): T {
@@ -1867,7 +1867,7 @@ function lalaka(a: "string" | "number", b: string | number): any {
     </script></section>
     <section data-markdown><script type="text/template">
         ### Синтаксис
-        
+
         Если generic-параметров несколько, то их все надо либо явно задавать, либо не задавать ни один.
         ```ts
         function createTriplet<T1, T2, T3>(a: T1, b: T2, c: T3): [T1, T2, T3] {
@@ -1881,8 +1881,8 @@ function lalaka(a: "string" | "number", b: string | number): any {
     </script></section>
     <section data-markdown><script type="text/template">
         ### Значения по умолчанию
-        
-        
+
+
         ```ts
         function createPair<T1, T2 = T1>(a: T1, b: T2): [T1, T2] {
             return [a, b];
@@ -1890,47 +1890,47 @@ function lalaka(a: "string" | "number", b: string | number): any {
 
         const q1: number = createPair(1, 2)[1];
         const q2: string = createPair(1, "lalaka")[1];
-        
+
         /* T1 = string, тогда T2 = T1 = string. */
         const q3: boolean = createPair<string>("lalaka", true)[1]; // Error: Argument of type 'true' is not assignable to parameter of type 'string'.
         const q4: boolean = createPair<string, boolean>("lalaka", true)[1];
         ```
         Если ни один generic тип не задан явно, то используется автовывод типов и тип по умолчанию не применяется. `[q1, q2]`
-        
+
         Если заданы явно все типы, то используются явно заданные значения. `[q4]`
-            
+
         Значения по умолчанию используются только, когда явно задана неумолчательная часть типов. `[q3]`
     </script></section>
     <section data-markdown><script type="text/template">
         ### Попробуем типизировать reduce
-        
-        
+
+
         ```js
         const array = [1, 2, 3];
 
         const q1 = array.reduce((acc, cur) => acc + cur); // result: 6
-        
-        const q2 = array.reduce((acc, cur, index) => 
+
+        const q2 = array.reduce((acc, cur, index) =>
             index % 2 === 0 ? acc + 1 : acc, 0); // result: 2
-        
-        const q3 = array.reduce((acc, cur, index, array) => 
+
+        const q3 = array.reduce((acc, cur, index, array) =>
             index > 0 ? acc + array[index - 1] : acc, ""); // result: "12"
         ```
-        
+
         Как бы вы типизировали эти случаи?
     </script></section>
     <section data-markdown><script type="text/template">
         ### Попробуем типизировать reduce
-        
+
         Первый случай:
         ```js
         const array = [1, 2, 3];
         const q1 = array.reduce((acc, cur) => acc + cur); // result: 6
         ```
-        
+
         ```ts
         interface Reduce<T> {
-            (callback: ( 
+            (callback: (
               previousValue: T,
               currentValue: T,
               currentIndex: number,
@@ -1943,17 +1943,17 @@ function lalaka(a: "string" | "number", b: string | number): any {
     </script></section>
     <section data-markdown><script type="text/template">
         ### Попробуем типизировать reduce
-        
+
         Второй случай:
         ```js
         const array = [1, 2, 3];
         const q2 = array.reduce((acc, cur, index) =>
             index % 2 === 0 ? acc + 1 : acc, 0); // result: 2
         ```
-        
+
         ```ts
         interface Reduce<T> {
-            (callback: ( 
+            (callback: (
               previousValue: T,
               currentValue: T,
               currentIndex: number,
@@ -1967,20 +1967,20 @@ function lalaka(a: "string" | "number", b: string | number): any {
     </script></section>
     <section data-markdown><script type="text/template">
         ### Попробуем типизировать reduce
-        
+
         Третий случай:
         ```js
         const array = [1, 2, 3];
         const q3 = array.reduce((acc, cur, index, array) =>
             index > 0 ? acc + array[index - 1] : acc, ""); // result: "12"
         ```
-        
+
         ```ts
         interface Reduce<T> {
             <R>(
             callback: (
               previousValue: R,
-              currentValue: T, 
+              currentValue: T,
               currentIndex: number,
               array: T[]) => R,
             initialValue: R): R;
@@ -1991,22 +1991,22 @@ function lalaka(a: "string" | "number", b: string | number): any {
     </script></section>
     <section data-markdown><script type="text/template">
         ### Попробуем типизировать reduce
-        
+
         Все перегрузки вместе:
         ```ts
         interface Reduce<T> {
             // 1
             (callback: (
-              previousValue: T, currentValue: T, 
+              previousValue: T, currentValue: T,
               currentIndex: number, array: T[]) => T): T;
             // 2
             (callback: (
               previousValue: T, currentValue: T,
-              currentIndex: number, array: T[]) => T, 
+              currentIndex: number, array: T[]) => T,
             initialValue: T): T;
             // 3
             <R>(
-            callback: ( 
+            callback: (
               previousValue: R, currentValue: T,
               currentIndex: number, array: T[]) => R,
             initialValue: R): R;
@@ -2015,7 +2015,7 @@ function lalaka(a: "string" | "number", b: string | number): any {
     </script></section>
     <section data-markdown><script type="text/template">
         ### Попробуем типизировать reduce
-        
+
         Как этим пользоваться:
         ```ts
         interface Reduce<T> {
@@ -2033,7 +2033,7 @@ function lalaka(a: "string" | "number", b: string | number): any {
     </script></section>
     <section data-markdown><script type="text/template">
         ### Ограничиваем generic-параметры
-        
+
         ```ts
         function foo<T extends string | number>(a: T) {
             // ...
@@ -2042,13 +2042,13 @@ function lalaka(a: "string" | "number", b: string | number): any {
         foo("qweqw");
         foo(true); // Error: Argument of type 'true' is not assignable to parameter of type 'string | number'.
         ```
-        
+
         `T extends string | number` означает, что тип в функцию может быть передан любой,
         который совместим с типом `string | number`.
     </script></section>
     <section data-markdown><script type="text/template">
         ### Ограничиваем generic-параметры
-        
+
         ```ts
         function bar<T, R extends keyof T>(obj: T, keys: R[]) {
             // ...
@@ -2057,12 +2057,12 @@ function lalaka(a: "string" | "number", b: string | number): any {
         bar({a: 10, b: 15}, ["a", "b"])
         bar({a: 10}, ["lalaka"]) // Error: Type 'string' is not assignable to type '"a"'.
         ```
-        
+
         Можно тип одного аргумента ограничить при помощи типа другого аргумента
     </script></section>
     <section data-markdown><script type="text/template">
         ### Ограничиваем generic-параметры
-        
+
         ```ts
         function foo<T, R>(a: T, b: R): [T, R] {
             return [a, b];
@@ -2078,7 +2078,7 @@ function lalaka(a: "string" | "number", b: string | number): any {
         const q3: "lalaka" = bar("lalaka", 10)[0]
         const q4: 10 = bar("lalaka", 10)[1]
         ```
-        
+
         Если тип ограничен примитивом, то компилятор будет выводить литеральные типы.
     </script></section>
     <section data-markdown ><script type="text/template">
@@ -2100,12 +2100,12 @@ function lalaka(a: "string" | "number", b: string | number): any {
     </script></section>
     <section data-markdown><script type="text/template">
         ### Классы
-        
+
         ```ts
         class User {
             name: string;
             age: number;
-    
+
             constructor(name: string, age: number) {
               this.name = name;
               this.age = age;
@@ -2115,13 +2115,13 @@ function lalaka(a: "string" | "number", b: string | number): any {
     </script></section>
     <section data-markdown><script type="text/template">
         ### Модификаторы доступа
-        
+
         ```ts
         class City {
             public population: number;
             private name: string;
             protected square: number;
-    
+
             constructor(name: string, population: number, square: number) {
               this.population = population;
               this.name = name;
@@ -2155,7 +2155,7 @@ function lalaka(a: "string" | "number", b: string | number): any {
         ```ts
         class Pie {
             public readonly filling: string;
-    
+
             constructor(filling: string) {
               this.filling = filling;
             }
@@ -2197,13 +2197,13 @@ function lalaka(a: "string" | "number", b: string | number): any {
         class Pie {
             public doughType: "yeast" | "pastry" = "yeast";
             public filling: string;
-        
+
             constructor(filling: string) {
               this.filling = filling;
             }
         }
         ```
-        
+
         Инициализировать поля можно при их объявлении и в конструкторе.
     </script></section>
     <section data-markdown><script type="text/template">
@@ -2212,14 +2212,14 @@ function lalaka(a: "string" | "number", b: string | number): any {
         ```ts
         class Pie {
             public doughType: "yeast" | "pastry" = "yeast";
-    
+
             constructor(public filling: string) {}
         }
-        
+
         const applePie = new Pie("apple");
         console.log(applePie.filling);
         ```
-        
+
         В конструкторе можно указать модификаторы доступа к аргументам функции-конструктора,
         тогда в классе создадутся одноименные поля.
     </script></section>
@@ -2244,10 +2244,10 @@ function lalaka(a: "string" | "number", b: string | number): any {
         ### Методы. Модификаторы доступа
 
         Как и у полей, у методов могут быть модификаторы доступа:
-        - `public` методы могут быть вызваны как внутри класса, так и снаружи; 
+        - `public` методы могут быть вызваны как внутри класса, так и снаружи;
         - `private` - только внутри класса;
         - `protected` - внутри класса или внутри класса наследника.
-        
+
         `readonly` к методам не применим. `static` работает также, как и для полей
 
     </script></section>
@@ -2316,7 +2316,7 @@ function lalaka(a: "string" | "number", b: string | number): any {
         //Error: Non-abstract class 'B1' does not implement inherited abstract member 'show' from class 'A'.
         class B1 extends A {}
         ```
-        
+
         Как думаете, зачем такое нужно?
     </script></section>
     <section data-markdown><script type="text/template">
@@ -2330,13 +2330,13 @@ function lalaka(a: "string" | "number", b: string | number): any {
 
         const a: A = { x: 40 };
         ```
-        
+
         Мы воспользовались классом как интерфейсом.
     </script></section>
     <section data-markdown><script type="text/template">
         ### Реализация интерфейса
 
-        
+
         ```ts
         interface Figure {
             print: () => void;
@@ -2385,7 +2385,7 @@ function lalaka(a: "string" | "number", b: string | number): any {
             c: boolean = false;
             constructor(public a: number, public b: string) { }
         }
-        
+
         const classType: ClassType = A;
         ```
     </script></section>
@@ -2396,7 +2396,7 @@ function lalaka(a: "string" | "number", b: string | number): any {
     </script></section>
     <section data-markdown ><script type="text/template">
         ### Задачки. Классы
-        
+
         - [Задача №1](https://www.typescriptlang.org/play/#code/PQKgBAsAUGtouCCAYQQ-CCA4QQEiCsEIghWEDAYwBsBDAZ1LACEyBTaOMQDBBBBEGUD4QQbhBAZEEHYQQYRBAnCC4wgRhBOgLhBUYAESAsEDaAWEFE4eYNpjHjpYKXMVhmajeMSAeEFTaFHQPIgYZIAEQNoCYQHPclgsqND0SAxEFSo9HCA+CBszBx4ToDSIOwcgLwgOHGotuKKiGBOYKlxzJxSCpyAbCBxbKJRWFxggOIgqOGlACwADNAgwNDQoGDySiIqRqiaYK3QRGQUAIJgNAAeAC40AHYAJhTUpDRgAN5BsPgA9gukswBOAK74s3vHABTTAFxgC6cAtgBGNMcAlFs7DGCkpwADh9bgAaGTjaSfADcvwAvu0YHBAadXoQAJb4AjEQj4a4ATweTzeH0+RJe72OPyRfzAxxos1OxwWYFmAAt0aQAHTTMAAajA+NhNLACKgYpGJHIVCmc0WKyotGpDH2hxO50uN0J-xO6IWAHNvtsRQwAcCbgBGRrg-Ew+GIhgotGY7G4gnkklfZW0ukMpkswHEY7rACSC1m13ZnK5tv5guFDDFEqgqqOrvwpxImtIDzWNAA2gBdMAAXjA+YWNAA7mBxtcrZ9wZWa5RrtIrVDC8LU7N-i9S+nM8Rs1znsRAbdSwA+MDTLn4HF4ufTT6fLn0pbnGjXa7EcH4b4lmfEOMH7sHUh7Qg0LmEPb664A552qCdAC0H6GbSgHXA3QM-QiCY5hfiMi5Dtm+aNIWMbCs2irrPW1oyB2L7vp+rRAA)
         - [Задача №2](https://www.typescriptlang.org/play/#code/PQKgBAsAUGtouCCAYQQ-CCA4QQEiCsEIghWEDILhBBuEEUEEQEsADTFTC1WUoBUBPABwFNo4xAMEBOUB8IIUAyIIHYQQMIggThBcYQIwgQ-DQBEgLBABgFhA5OUWAGZ5+JdTCqNYcntSz8iQDwgqI+sKB5EDDJAAiADATCA53i2vSoooiAYiCoqFxwgPggAiSEeF6A0iCChIC8IDipqK74GohgXgQCqSRCNOpCgGwgqQJyiVjCYIDiIKhxNUoATAAMYACMAKxK0CDA0NCgYGqastq6+gL4YMPQAMYANgCGAM6blGAA3tAAvqNQAC5s7EwXYAC8YOsAdswA3CcAlg+n7ABOAGbry0uAEF9pFYAAPABcYAeAFcALYAIx+rygxyg0A+Xz+AMuACFQTA4KxvljoQAKZjQzanUkPADmAEpbgA+MAANwA9m8ACao9HQX6wh7LU5vTkPMDLb7sdZfclQmEI5HfAA0YHOHGhFBYHEZ0JBADIwASDkTYDLTrDvpKHuwAO4ai4Kxn8k7S2Xy-rqiiMgB0JKx5I6nSUjLG4AAtNHFiMMVA1lsdgB5U4ACx+hO4ywlNO+sNFnO+5NYsMRqzeyzAirhSJ+6tL5crYCpSrr32ZZu46IFUHGk3MsysNnssZWMrl7HJ3rAqYzHYjYGjkdjQA)
     </script></section>
@@ -2410,31 +2410,31 @@ function lalaka(a: "string" | "number", b: string | number): any {
     </script></section>
     <section data-markdown ><script type="text/template">
         ### Приведение типов
-        
+
         ```ts
         let a = 10;
-        
+
         const b: 10 = a; // Error: Type 'number' is not assignable to type '10'.
         ```
-        В этом случае мы уверены в том, какое значение в переменной. 
+        В этом случае мы уверены в том, какое значение в переменной.
         И точно знаем, что оно подходит! И чрезмерная забота от TS раздражает.
     </script></section>
     <section data-markdown ><script type="text/template">
         ### Приведение типов
-        
+
         ```ts
         let a = 10;
-        
+
         const b1: 10 = <10>a;
-        
+
         const b2: 10 = a as 10;
         ```
-        
+
         Два синтаксиса каста: `<>` и `as` — оба эквивалентны.
     </script></section>
     <section data-markdown data-transition="none"><script type="text/template">
         ### Как думаете
-        
+
         Валидны ли эти конструкции?
         ```ts
         const a = 10;
@@ -2444,7 +2444,7 @@ function lalaka(a: "string" | "number", b: string | number): any {
     </script></section>
     <section data-markdown data-transition="none"><script type="text/template">
         ### Как думаете
-        
+
         Валидны ли эти конструкции?
         ```ts
         const a = 10;
@@ -2454,17 +2454,17 @@ function lalaka(a: "string" | "number", b: string | number): any {
     </script></section>
     <section data-markdown><script type="text/template">
         ### Ломаем систему
-        
+
         ```ts
         const a = 10;
         const b = a as any as string;
         ```
-        
+
         Почему такое может быть плохо?
     </script></section>
     <section data-markdown><script type="text/template">
         ### Ломаем систему даже легально
-        
+
         ```ts
         function getValue(index: 0 | 1) {
             const tuple: [number, number] = [1, 1];
@@ -2480,7 +2480,7 @@ function lalaka(a: "string" | "number", b: string | number): any {
     </script></section>
     <section data-markdown ><script type="text/template">
         ### Type guards
-        
+
         ```ts
         interface Keyboard {
             pressKey: (key: number) => void;
@@ -2501,7 +2501,7 @@ function lalaka(a: "string" | "number", b: string | number): any {
     </script></section>
     <section data-markdown ><script type="text/template">
         ### Type guards
-        
+
         ```ts
         function makeAction(pointer: Mouse | Keyboard) {
             if ("click" in pointer) {
@@ -2511,22 +2511,22 @@ function lalaka(a: "string" | "number", b: string | number): any {
             }
         }
         ```
-        
-        `"click" in pointer` — type guard. Внутри if может быть только тип `Mouse`, а внутри else — `Keyboard`. 
+
+        `"click" in pointer` — type guard. Внутри if может быть только тип `Mouse`, а внутри else — `Keyboard`.
     </script></section>
     <section data-markdown ><script type="text/template">
         ### Type guards
-        
+
         - оператор `in`
         - `===` или `!==`
         - оператор `instanceof`
         - `Array.isArray`, `Number.isNaN`...
-        
-        type guard помогают TS понять, что в этом месте ветвления значение принадлежит конкретному типу. 
+
+        type guard помогают TS понять, что в этом месте ветвления значение принадлежит конкретному типу.
     </script></section>
     <section data-markdown ><script type="text/template">
         ### Type guard своими руками
-        
+
         Можно определять свои type guards.
         ```ts
         function isNumber(a: any): a is number {
@@ -2539,12 +2539,12 @@ function lalaka(a: "string" | "number", b: string | number): any {
             }
         }
         ```
-        
+
         Конструкция `{parameter} is {type}` объявляет TS, что эта функция — type guard.
     </script></section>
     <section data-markdown><script type="text/template">
         ### Pattern matching
-        
+
         ```ts
         interface A {
             kind: "a", do: (a: string) => boolean;
@@ -2569,7 +2569,7 @@ function lalaka(a: "string" | "number", b: string | number): any {
     </script></section>
     <section data-markdown><script type="text/template">
         ### Enum
-        
+
         ```ts
         enum Color {
             Black,
@@ -2583,7 +2583,7 @@ function lalaka(a: "string" | "number", b: string | number): any {
     </script></section>
     <section data-markdown><script type="text/template">
         ### Enum
-        
+
         вот в такой js транспилируется предыдущий код:
         ```js
         var Color;
@@ -2598,7 +2598,7 @@ function lalaka(a: "string" | "number", b: string | number): any {
     </script></section>
     <section data-markdown><script type="text/template">
         ### Enum
-        
+
         можно задавать значения явно:
         ```ts
         enum Color {
@@ -2616,7 +2616,7 @@ function lalaka(a: "string" | "number", b: string | number): any {
     </script></section>
     <section data-markdown><script type="text/template">
         ### Enum
-        
+
         Значением в enum могут быть строки, но тогда явно объявленными для всех
         ```ts
         enum Color {
@@ -2645,9 +2645,9 @@ function lalaka(a: "string" | "number", b: string | number): any {
     </script></section>
     <section data-markdown ><script type="text/template">
         ### Что такое *.d.ts файлы
-        
+
         `*.d.ts` файл — файл, который содержит только описание типов, без их реализаций.
-        
+
         Например, сигнатуры функций без реализации; описание переменных без инициализации.
     </script></section>
     <section data-markdown ><script type="text/template">
@@ -2664,16 +2664,16 @@ function lalaka(a: "string" | "number", b: string | number): any {
         ```ts
         class Vector {
             static readonly zero = new Vector(0, 0);
-    
+
             constructor(public readonly x: number, public readonly y: number) {
             }
-    
+
             public add(vector: Vector): Vector {
               return new Vector(this.x + vector.x, this.y + vector.y);
             }
         }
         ```
-        
+
         Теперь хотим поделиться ею с миром.
     </script></section>
     <section data-markdown ><script type="text/template">
@@ -2681,20 +2681,20 @@ function lalaka(a: "string" | "number", b: string | number): any {
 
         Наша библиотека написана на TS. А значит, проекты без TS не смогут ею пользоваться.
         А еще, даже в проектах на TS сборка может быть настроена по-другому и наша библиотека не сбилдится.
-        
+
         Нехорошо!
     </script></section>
     <section data-markdown ><script type="text/template">
         ### Пример
 
-        Можно скомпилировать в JS!  
+        Можно скомпилировать в JS!
         Тогда библиотекой смогут пользоваться все и компилятор настраивать не надо.
     </script></section>
     <section data-markdown ><script type="text/template">
         ### Пример
 
         Но в случае с компиляцией в JS, проекты на TS не будут знать ничего о типах,
-        с которыми наша библиотека работает. 
+        с которыми наша библиотека работает.
     </script></section>
     <section data-markdown ><script type="text/template">
         ### Пример
@@ -2716,11 +2716,11 @@ function lalaka(a: "string" | "number", b: string | number): any {
         }
         ```
         `*.d.ts` файлы можно генерировать автоматически, а можно писать вручную.
-        
+
     </script></section>
     <section data-markdown ><script type="text/template">
         ### Синтаксис
-        
+
         ```ts
         /* .ts */
         const globalVariable1: string = "lalaka";
@@ -2730,7 +2730,7 @@ function lalaka(a: "string" | "number", b: string | number): any {
             return a.toString() === b;
         }
         ```
-        
+
         ```ts
         /* .d.ts */
         declare const globalVariable1: string;
@@ -2741,21 +2741,21 @@ function lalaka(a: "string" | "number", b: string | number): any {
     </script></section>
     <section data-markdown ><script type="text/template">
         ### Публикация *.d.ts файлов
-        
+
         - Приложить их к библиотеке прям рядом с соответствующими js файлами
-        - Сложить в специальный репозиторий [https://github.com/DefinitelyTyped/DefinitelyTyped](https://github.com/DefinitelyTyped/DefinitelyTyped). 
+        - Сложить в специальный репозиторий [https://github.com/DefinitelyTyped/DefinitelyTyped](https://github.com/DefinitelyTyped/DefinitelyTyped).
         Тогда типы будут доступны в npm в пространстве имен `@types`:
-        
+
         ```
         npm i @types/myAwesomeLibrary
         ```
-        
+
     </script></section>
     <section data-markdown ><script type="text/template">
         ### Задачка *.d.ts
-        
-        Напишите файл декларации типов для файла [vector.js](https://gist.github.com/byTimo/c51bc16d8c48e676da840f3f892b14c6) 
-        
+
+        Напишите файл декларации типов для файла [vector.js](https://gist.github.com/byTimo/c51bc16d8c48e676da840f3f892b14c6)
+
     </script></section>
 </section>
 <section>
@@ -2764,8 +2764,8 @@ function lalaka(a: "string" | "number", b: string | number): any {
     </script></section>
     <section data-markdown ><script type="text/template">
         ### Типы React
-        
-        К счастью, типы React функций, методов, классов и всего остального описаны за нас.   
+
+        К счастью, типы React функций, методов, классов и всего остального описаны за нас.
         В проект их нужно добавить, при помощи подключения npm-пакета:
         ```
         npm install @types/react --save-dev
@@ -2773,8 +2773,8 @@ function lalaka(a: "string" | "number", b: string | number): any {
     </script></section>
     <section data-markdown ><script type="text/template">
         ### Экспорт и импорт типов
-        
-        Типы можно экспортировать/импортировать так же, как и переменные в обычном JS 
+
+        Типы можно экспортировать/импортировать так же, как и переменные в обычном JS
         ```ts
         /* SomeComponent.tsx */
         export type Align = "left" | "right";
@@ -2785,7 +2785,7 @@ function lalaka(a: "string" | "number", b: string | number): any {
             onChange: (value: string | null) => void;
         }
         ```
-        
+
         ```ts
         /* OtherComponent.tsx */
         import { Align, SomeComponentProps } from "../SomeComponent.tsx";
@@ -2795,8 +2795,8 @@ function lalaka(a: "string" | "number", b: string | number): any {
     </script></section>
     <section data-markdown ><script type="text/template">
         ### Экспорт и импорт типов
-        
-        В TS ≥ 3.8 можно импортировать типы только на уровне типов: не исполняя код в модуле 
+
+        В TS ≥ 3.8 можно импортировать типы только на уровне типов: не исполняя код в модуле
         ```ts
         /* OtherComponent.tsx */
         import type { Align, SomeComponentProps } from "../SomeComponent.tsx";
@@ -2807,17 +2807,17 @@ function lalaka(a: "string" | "number", b: string | number): any {
     </script></section>
     <section data-markdown ><script type="text/template">
         ### Импорт React в файл
-        
+
         В JS мы писали так:
         ```js
         import React from "react"
         ```
-         
+
         В TS надо писать так:
         ```ts
         import * as React from "react"
         ```
-        
+
         Но можно настроить конфиг, чтобы работало как раньше.
     </script></section>
     <section data-markdown ><script type="text/template">
@@ -2825,9 +2825,9 @@ function lalaka(a: "string" | "number", b: string | number): any {
     </script></section>
     <section data-markdown ><script type="text/template">
         ### Функциональные компоненты
-        
+
         Без пропсов
-        
+
         **< 16.8**
         ```js
         const ColorText: React.StatelessComponent = () => {
@@ -2843,9 +2843,9 @@ function lalaka(a: "string" | "number", b: string | number): any {
     </script></section>
     <section data-markdown ><script type="text/template">
         ### Функциональные компоненты
-        
+
         С пропсами
-        
+
         **< 16.8**
         ```js
         interface ColorTextProps {
@@ -2865,16 +2865,16 @@ function lalaka(a: "string" | "number", b: string | number): any {
     </script></section>
     <section data-markdown ><script type="text/template">
         ### Функциональные компоненты
-        
-        В React есть встроенный тип для функциональных компонентов. 
+
+        В React есть встроенный тип для функциональных компонентов.
         До версии Реакта 16.8 он назывался `React.StatelessComponent`, потом переименовался в
         `React.FunctionComponent`. Чтобы не писать так длинно, можно писать так: `React.SFC` и `React.FC`
-        
+
         Дип функциональных компонентов используется один generic параметр — тип props.
     </script></section>
     <section data-markdown ><script type="text/template">
         ### Функциональные компоненты
-        
+
         В типе props не нужно описывать children — он уже объявлен в типе `StatelessComponent`
         ```js
         interface ColorTextProps {
@@ -2888,8 +2888,8 @@ function lalaka(a: "string" | "number", b: string | number): any {
     </script></section>
     <section data-markdown ><script type="text/template">
         ### Функциональные компоненты
-        
-        Не обязательно использовать типы `FC` или `SFC` вообще. 
+
+        Не обязательно использовать типы `FC` или `SFC` вообще.
         Достаточно описать функцию, возвращающую `React.ReactElement | null`
         ```js
         interface MdashProps {
@@ -2904,7 +2904,7 @@ function lalaka(a: "string" | "number", b: string | number): any {
     </script></section>
     <section data-markdown ><script type="text/template">
         ### Hooks
-        
+
         У всех хуков есть свои собственные типы. Вот пример для `useState`
         ```ts
         type SetStateAction<S> = S | ((prevState: S) => S);
@@ -2914,7 +2914,7 @@ function lalaka(a: "string" | "number", b: string | number): any {
     </script></section>
     <section data-markdown ><script type="text/template">
         ### Hooks
-        
+
         Автовывод типа значения в хуках работает на основании переданного значения. Но не в сложных случаях
         ```ts
         const [value, setValue] = React.useState(10);
@@ -2927,7 +2927,7 @@ function lalaka(a: "string" | "number", b: string | number): any {
     </script></section>
     <section data-markdown ><script type="text/template">
         ### Компоненты-классы
-        
+
         ```ts
         interface ColorTextProps {
             value: string | null;
@@ -2942,13 +2942,13 @@ function lalaka(a: "string" | "number", b: string | number): any {
             ...
         }
         ```
-        
+
         У обоих generic-параметров значение по умолчанию `{}`, можно их не указывать.
     </script></section>
     <section data-markdown ><script type="text/template">
         ### Компоненты-классы. render
-        
-        Из метода render должен вернуться тип React.ReactNode:  
+
+        Из метода render должен вернуться тип React.ReactNode:
         `узел jsx-разметки | string | number | boolean | null | undefined`
         ```ts
         class SomeComponent extends React.Component<{value: any}> {
@@ -2957,16 +2957,16 @@ function lalaka(a: "string" | "number", b: string | number): any {
               if(typeof value === "number") { return value + 10; } // number
               if(typeof value === "boolean") { return !value; } // boolean
               if(typeof value === "undefined") { return value; }  // undefiened
-    
+
               return JSON.stringify(value); // string
             }
         }
         ```
     </script></section>
     <section data-markdown ><script type="text/template">
-        ### Компоненты-классы. Методы жизненного цикла 
-        
-        
+        ### Компоненты-классы. Методы жизненного цикла
+
+
         ```ts
         interface ColorTextProps {
             value: string;
@@ -2977,7 +2977,7 @@ function lalaka(a: "string" | "number", b: string | number): any {
 
         class ColorText extends React.Component<ColorTextProps, ColorTextState> {
             componentDidUpdate(prevProps: ColorTextProps, prevState: ColorTextState): void {
-              if(this.props.value !== prevProps.value 
+              if(this.props.value !== prevProps.value
               || this.state.color !== prevState.color) {
               ...
               }
@@ -2987,9 +2987,9 @@ function lalaka(a: "string" | "number", b: string | number): any {
         ```
     </script></section>
     <section data-markdown ><script type="text/template">
-        ### Default props 
-        
-        
+        ### Default props
+
+
         ```js
         interface ColorTextProps {
             value: string;
@@ -3014,7 +3014,7 @@ function lalaka(a: "string" | "number", b: string | number): any {
     </script></section>
     <section data-markdown ><script type="text/template">
         ### High Order Component
-        
+
         Для компонентов без props все просто:
         ```js
         function myHOC(Component: React.ComponentType) {
@@ -3033,7 +3033,7 @@ function lalaka(a: "string" | "number", b: string | number): any {
     </script></section>
     <section data-markdown ><script type="text/template">
         ### High Order Component
-        
+
         Но если у компонента есть хоть какие-то props, то будет ошибка:
         ```js
         function myHOC(Component: React.ComponentType) {
@@ -3049,7 +3049,7 @@ function lalaka(a: "string" | "number", b: string | number): any {
     </script></section>
     <section data-markdown ><script type="text/template">
         ### High Order Component
-        
+
         Починим ошибку:
         ```js
         function myHOC<TProps>(Component: React.ComponentType<TProps>) {
@@ -3065,7 +3065,7 @@ function lalaka(a: "string" | "number", b: string | number): any {
     </script></section>
     <section data-markdown ><script type="text/template">
         ### High Order Component
-        
+
         Ограничим компоненты, которые можем принять в HOC
         ```js
         interface WithColor {
@@ -3074,7 +3074,7 @@ function lalaka(a: "string" | "number", b: string | number): any {
         function myHOC<TProps extends WithColor>(Component: React.ComponentType<TProps>) {
             ...
         }
-            
+
         const Text = (props: { value: string }) => {
             return <span>{props.value}</span>;
         }
@@ -3085,6 +3085,12 @@ function lalaka(a: "string" | "number", b: string | number): any {
         myHOC(ColorText);
         myHOC(Text); // Error: Argument of type '(props: { value: string; }) => JSX.Element' is not assignable to parameter of type 'ComponentType<WithColor>'.
         ```
+    </script></section>
+    <section data-markdown ><script type="text/template">
+        ### Задачка React+TS
+
+        Задача лежит [тут](https://github.com/kontur-courses/typescript/tree/master/react-typescript-task)
+
     </script></section>
 </section>
 <section>
