@@ -44,4 +44,4 @@
 - *.d.ts
     - Написать файл декларации типов для файла [vector.js](https://gist.github.com/byTimo/c51bc16d8c48e676da840f3f892b14c6)
         - [ответ - vector.d.ts](https://gist.github.com/byTimo/128b7d45bceee2e885acaf117268c1ef)
-
+- [Решение](https://codesandbox.io/s/vehicle-filter-table-solution-53tym) большой задачи
