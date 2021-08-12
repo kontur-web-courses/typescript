@@ -13,7 +13,7 @@
 
 Курс предполагает, что ты уже знаешь JavaScript ES2015+.
 
-Для большей части курса знание React не нужно. Но курс описывает работу TS+React. Поэтому желательно знать React. Для этого можно пройти [курс](https://github.com/kontur-courses/react).
+Для большей части курса знание React не нужно. Но курс описывает работу TS+React. Поэтому желательно знать React. Для этого можно пройти [курс](https://github.com/kontur-web-courses/react).
 
 ## Самостоятельное изучение
 
@@ -21,7 +21,7 @@
 
 ## Презентация
 
-[Ссылка на презентацию](https://kontur-courses.github.io/typescript/#/)
+[Ссылка на презентацию](https://kontur-web-courses.github.io/typescript/#/)
 
 
 ## Ссылки на задачи
@@ -56,5 +56,5 @@
     - [Задание #12](https://www.typescriptlang.org/play?#code/PQKgBI6CCAwggsIFi8IIDhBCsIALgFBi2QxCCEYQZQARBFAhEGTAEMA7ATzEGEQMExQfhBA+EECYQMAZQFcBbAGK8qAYwA0YAKIBHXhQA2AZ2FiwiMACUApgDdtAJ1HbVo9WDYtEgCRBS5RIFEQJlEBcIOMzZA4iAk2eQNIgYPDk-oDcIGwWtnhsLmAubIA8IFYhgPIggGIgiIgAdGCA+CBsgIIgIeQcfuwhQUjJsWxwYFxx8PlsIRowzYBsIPDh-iSAMiBgAMxg+YTRiBjYYABESgKSAEwArFMeWFPacopKkgAuBrzaU+6TUwZ6hsaSALQAjAAMKyDA6Og7NAAO2jwCpmAAvJRaABuV4fL6yeTKX4A6g0EFvT5ac5GEwiMww4EvBFfUxKf7fIRosAAH2kmyhRNJOn0KNMIPQADM0TsAJYAeyoYAZbLZAAoKKgwFQBAAjQySEWC4X8MUGSRMsRKQW4gCUYAA3qswEoAO4snaiAAWYF5CtESky2LVmsmk1EFCUXxmAimE1t7tEHKUbIU2kyCjZAHNec7+EcuWiLWb+RKVSqQe73SKzhQANYJxP2x3TDaQpSurWJsCeqje33+oMh3NbcNmqNomNgEVxjNFrDJ7Rp1u2rNOs404wFtvYEtlv0B4OnZGD+WRzLRihxwuJjtdrUAX3Qm8ZPN590kN0WknVYGxgtDtbRgsbzf+AD5KGAANRNsDr+M7vkDO6Sb-H09gue1bKJeYjXhQsb3o+fwwa+74gtyfL7mA9w-hqAGfOe-YXIcs5gdBD5XBQb7xkAA)
 - *.d.ts
     - Написать файл декларации типов для файла [vector.js](https://gist.github.com/byTimo/c51bc16d8c48e676da840f3f892b14c6)
-- [React+TS](https://github.com/kontur-courses/typescript/tree/master/react-typescript-task)
+- [React+TS](https://github.com/kontur-web-courses/typescript/tree/master/react-typescript-task)
 

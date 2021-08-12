@@ -13,7 +13,7 @@
 
 Курс предполагает, что ты уже знаешь JavaScript ES2015+.
 
-Для большей части курса знание React не нужно. Но курс описывает работу TS+React. Поэтому желательно знать React. Для этого можно пройти [курс](https://github.com/kontur-courses/react).
+Для большей части курса знание React не нужно. Но курс описывает работу TS+React. Поэтому желательно знать React. Для этого можно пройти [курс](https://github.com/kontur-web-courses/react).
 
 ## Самостоятельное изучение
 
@@ -21,7 +21,7 @@
 
 ## Презентация
 
-[Ссылка на презентацию](https://kontur-courses.github.io/typescript/#/)
+[Ссылка на презентацию](https://kontur-web-courses.github.io/typescript/#/)
 
 
 ## Ссылки на задачи
@@ -80,5 +80,5 @@
 - *.d.ts
     - Написать файл декларации типов для файла [vector.js](https://gist.github.com/byTimo/c51bc16d8c48e676da840f3f892b14c6)
     [vector.d.ts](https://gist.github.com/byTimo/128b7d45bceee2e885acaf117268c1ef)
-- [React+TS](https://github.com/kontur-courses/typescript/tree/master/react-typescript-task) - [Пример решения](https://codesandbox.io/s/vehicle-filter-table-solution-53tym)
+- [React+TS](https://github.com/kontur-web-courses/typescript/tree/master/react-typescript-task) - [Пример решения](https://codesandbox.io/s/vehicle-filter-table-solution-53tym)
 
